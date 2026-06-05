@@ -1,0 +1,2319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Whestlee — Portfolio</title>
+<link rel="icon" type="image/x-icon" href="../Portfolio-2026/Web-Assets/Wlogo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('myK7WUuQA1UsR81bY');</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+:root{
+  --abyss:#04080f;--navy-1:#070d1a;--navy-2:#0b1426;--navy-3:#101d36;--navy-4:#172547;
+  --silver:#c8d6e8;--silver-bright:#e8f0f8;--silver-dim:#8a9cb8;--silver-muted:#4a5a72;
+  --ice:#dceeff;--steel:#a0b4cc;--accent:#4d8fff;--accent-dim:#1a4a99;
+  --border-silver:rgba(200,214,232,.14);--border-subtle:rgba(255,255,255,.05);
+}
+body{font-family:'Inter',sans-serif;background:var(--abyss);color:var(--silver);overflow-x:hidden;cursor:none;}
+::-webkit-scrollbar{display:none;}
+
+/* CURSOR */
+.pen-cursor{
+  position:fixed;left:0;top:0;width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;z-index:2147483647;
+  transform:translate(-50%,-50%) rotate(-25deg);
+  transition:transform .08s linear,opacity .3s ease;
+  filter:drop-shadow(0 0 10px rgba(77,143,255,.7));
+}
+.pen-cursor i{color:var(--silver-bright);font-size:1.2rem;}
+.cursor-glow{
+  position:fixed;width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(77,143,255,.07) 0%,transparent 70%);
+  pointer-events:none;z-index:99997;transform:translate(-50%,-50%);
+  transition:left .12s ease,top .12s ease;
+}
+
+/* TRAIL */
+#trailCanvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:99998;}
+
+/* LOADER */
+.loader {
+  position: fixed;
+  inset: 0;
+  background: var(--abyss);
+  z-index: 9999999;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.loader-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(77,143,255,.12);
+  animation: loaderRingPulse 3s ease-in-out infinite;
+}
+.loader-ring:nth-child(1) { width: 200px; height: 200px; animation-delay: 0s; }
+.loader-ring:nth-child(2) { width: 340px; height: 340px; animation-delay: .4s; border-style: dashed; }
+.loader-ring:nth-child(3) { width: 480px; height: 480px; animation-delay: .8s; }
+.loader-ring:nth-child(4) { width: 620px; height: 620px; animation-delay: 1.2s; border-style: dashed; border-color: rgba(77,143,255,.05); }
+@keyframes loaderRingPulse {
+  0%, 100% { transform: scale(1); opacity: .3; }
+  50% { transform: scale(1.04); opacity: 1; }
+}
+.loader-orbit {
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  animation: loaderOrbit 2.4s linear infinite;
+}
+.loader-orbit::before {
+  content: '';
+  position: absolute;
+  top: -4px; left: 50%;
+  transform: translateX(-50%);
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 16px 4px rgba(77,143,255,.7);
+}
+@keyframes loaderOrbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.loader-orbit-2 {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  animation: loaderOrbit 1.6s linear infinite reverse;
+}
+.loader-orbit-2::before {
+  content: '';
+  position: absolute;
+  top: -3px; left: 50%;
+  transform: translateX(-50%);
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--silver-dim);
+  box-shadow: 0 0 10px 3px rgba(200,214,232,.4);
+}
+.loader-logo-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+.loader-text p {
+    position: absolute;
+    top: 74%;
+    left: 41%;
+}
+.loader img{
+    width: 500px;
+}
+.loader-logo {
+  width: 10px;
+  opacity: 0;
+  filter: brightness(1.2) drop-shadow(0 0 20px rgba(77,143,255,.6));
+  animation: logoAppear 3s cubic-bezier(.2,.8,.2,1) 1s forwards;
+}
+@keyframes logoAppear {
+  0%   { opacity: 0; transform: scale(.5) rotate(-15deg); filter: brightness(2) drop-shadow(0 0 40px rgba(77,143,255,1)); }
+  60%  { opacity: 1; transform: scale(1.08) rotate(3deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); filter: brightness(1.2) drop-shadow(0 0 20px rgba(77,143,255,.6)); }
+}
+.loader-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: 14px;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-image: linear-gradient(90deg, var(--silver-dim), var(--silver-bright), var(--accent), var(--silver-bright), var(--silver-dim));
+  background-size: 300% auto;
+  overflow: hidden;
+  max-width: 0;
+  white-space: nowrap;
+  animation:
+    nameExpand 1s cubic-bezier(.77,0,.175,1) .9s forwards,
+    nameShine 3s linear 1.9s infinite;
+  margin-top: 5px;
+}
+@keyframes nameExpand {
+  from { max-width: 0; opacity: 0; }
+  to   { max-width: 400px; opacity: 1; }
+}
+@keyframes nameShine {
+  to { background-position: 200% center; }
+}
+.loader-tagline {
+  font-size: .62rem;
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  color: var(--silver-muted);
+  margin-top: 10px;
+  opacity: 0;
+  animation: taglineIn .8s ease 1.7s forwards;
+}
+@keyframes taglineIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.loader-bar-wrap {
+  position: relative;
+  z-index: 2;
+  margin-top: 44px;
+  width: 220px;
+  opacity: 0;
+  animation: taglineIn .6s ease 2s forwards;
+}
+.loader-bar-track {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,.07);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.loader-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-dim), var(--accent), var(--silver-bright));
+  border-radius: 2px;
+  transition: width .04s linear;
+  box-shadow: 0 0 8px rgba(77,143,255,.6);
+}
+.loader-counter {
+  margin-top: 12px;
+  font-size: .75rem;
+  color: var(--accent);
+  letter-spacing: 4px;
+  font-family: 'Syne', sans-serif;
+  text-align: center;
+}
+.loader.exit {
+  animation: loaderExit .9s cubic-bezier(.76,0,.24,1) forwards;
+}
+@keyframes loaderExit {
+  0%   { clip-path: inset(0 0 0 0); opacity: 1; }
+  100% { clip-path: inset(0 0 100% 0); opacity: 1; }
+}
+
+/* BG */
+#bgCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:-5;}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse 70% 50% at top left,rgba(26,74,153,.18) 0%,transparent 60%),
+             radial-gradient(ellipse 60% 40% at bottom right,rgba(13,30,70,.25) 0%,transparent 60%);
+  z-index:-4;
+}
+.noise{position:fixed;inset:0;background:url('https://grainy-gradients.vercel.app/noise.svg');opacity:.05;z-index:-3;pointer-events:none;}
+
+/* SIDE NAV */
+.side-nav{
+  position:fixed;left:28px;top:50%;transform:translateY(-50%);
+  width:62px;padding:28px 30px;border-radius:30px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;z-index:1000;
+  backdrop-filter:blur(24px);
+  box-shadow:0 0 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(200,214,232,.1),0 0 30px rgba(77,143,255,.04);
+}
+.logo-mark img{width:40px;}
+.logo-mark{
+  width:48px;height:48px;border-radius:16px;
+  background:linear-gradient(135deg,rgba(0,24,66),rgba(10,20,36));color:var(--navy-1);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:1px;
+  box-shadow:0 8px 24px rgba(77,143,255,.2),0 0 0 1px rgba(200,214,232,.2);
+}
+.side-nav ul{display:flex;flex-direction:column;gap:15px;list-style:none;}
+.side-nav a{
+  width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  position:relative;color:var(--silver-muted);text-decoration:none;overflow:hidden;
+  transition:.45s cubic-bezier(.2,.8,.2,1);background:rgba(255,255,255,.02);border:1px solid var(--border-subtle);
+}
+.side-nav a::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(77,143,255,.15),rgba(77,143,255,.03));
+  transform:scale(0);border-radius:inherit;transition:.45s ease;
+}
+.side-nav a::after{
+  content:attr(data-text);position:absolute;left:72px;white-space:nowrap;
+  font-size:.82rem;font-weight:500;padding:10px 16px;border-radius:14px;
+  background:var(--navy-2);color:var(--silver-bright);letter-spacing:.5px;
+  transform:translateX(-12px) scale(.85);opacity:0;transition:.4s ease;
+  box-shadow:0 12px 30px rgba(0,0,0,.5);font-family:'Inter',sans-serif;border:1px solid var(--border-silver);
+}
+.side-nav a i{position:relative;z-index:2;font-size:1rem;transition:.45s ease;}
+.side-nav a:hover{transform:translateX(10px) rotate(-5deg) scale(1.06);color:var(--silver-bright);border-color:var(--border-silver);cursor:none;box-shadow:0 8px 30px rgba(77,143,255,.15);}
+.side-nav a:hover::before{transform:scale(1);}
+.side-nav a:hover::after{opacity:1;transform:translateX(0) scale(1);}
+.side-nav a:hover i{transform:scale(1.2) rotate(12deg);}
+
+/* SOCIAL DOCK */
+.social-dock {
+  position: fixed;
+  bottom: 36px;
+  right: 1.2%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--silver-muted);
+  text-decoration: none;
+  font-size: 1.05rem;
+  background: none;
+  border: none;
+  padding: 4px;
+  position: relative;
+  transition: color .35s ease, transform .35s cubic-bezier(.2,.8,.2,1);
+  animation: socialFadeUp .6s ease backwards;
+  cursor: none;
+}
+.social-icon:nth-child(1) { animation-delay: .1s; }
+.social-icon:nth-child(2) { animation-delay: .2s; }
+.social-icon:nth-child(3) { animation-delay: .3s; }
+.social-icon:nth-child(4) { animation-delay: .4s; }
+.social-icon:nth-child(5) { animation-delay: .5s; }
+@keyframes socialFadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.social-icon::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+  transform-origin: center;
+}
+.social-icon:hover {
+  color: var(--silver-bright);
+  transform: translateY(-6px);
+}
+.social-icon:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+.social-icon[title="Instagram"]:hover { color: #e1306c; }
+.social-icon[title="Instagram"]:hover::after { background: #e1306c; }
+.social-icon[title="TikTok"]:hover    { color: #69c9d0; }
+.social-icon[title="TikTok"]:hover::after { background: #69c9d0; }
+.social-icon[title="Facebook"]:hover  { color: #1877f2; }
+.social-icon[title="Facebook"]:hover::after { background: #1877f2; }
+.social-icon[title="LinkedIn"]:hover  { color: #0a66c2; }
+.social-icon[title="LinkedIn"]:hover::after { background: #0a66c2; }
+.social-icon[title="GitHub"]:hover    { color: var(--silver-bright); }
+.social-icon[title="GitHub"]:hover::after { background: var(--silver-bright); }
+.social-icon i { display: block; }
+
+/* EMAIL DOCK */
+.email-dock{
+  position:fixed;bottom:176px;right:28px;z-index:1000;
+  display:flex;flex-direction:column;align-items:center;gap:0;
+  animation:emailSlideIn .8s ease backwards .3s;
+}
+@keyframes emailSlideIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+.email-dock::before{
+  content:'';display:block;width:1px;height:60px;
+  background:linear-gradient(to bottom,transparent,rgba(77,143,255,.5));
+  margin-bottom:10px;animation:lineGrow 1s ease forwards .5s;opacity:0;
+}
+.email-link{
+  writing-mode:vertical-rl;text-orientation:mixed;
+  font-size:.72rem;letter-spacing:3px;color:var(--silver-muted);
+  text-decoration:none;transition:.4s ease;font-family:'Syne',sans-serif;
+  position:relative;padding:4px;
+}
+.email-link::after{
+  content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:0;height:1px;background:var(--accent);transition:.4s ease;
+}
+.email-link:hover{color:var(--accent);letter-spacing:4px;cursor:none;}
+.email-link:hover::after{width:100%;}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;position:relative;overflow:hidden;padding:0 8%;
+}
+.hero-content{top:20px;position:relative;z-index:2;}
+.hero small{letter-spacing:8px;text-transform:uppercase;color:var(--silver-muted);font-size:.68rem;font-weight:400;}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;font-size:clamp(17rem,20vw,18rem);
+  line-height:.88;margin-top:20px;text-transform:uppercase;font-weight:800;letter-spacing:8px;
+}
+.gradient-text{
+  background:linear-gradient(100deg,var(--silver-bright) 0%,var(--silver) 30%,var(--accent) 55%,var(--silver-dim) 75%,var(--silver-bright) 100%);
+  background-size:300% auto;-webkit-background-clip:text;color:transparent;background-clip:text;
+  animation:textShine 6s linear infinite;
+}
+@keyframes textShine{to{background-position:200% center;}}
+.hero p{max-width:720px;margin:30px auto;color:var(--silver-muted);font-size:.98rem;line-height:1.95;font-weight:300;}
+.hero-btns{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+
+/* BUTTONS */
+.btn{
+  padding:13px 28px;border-radius:50px;border:1px solid var(--border-silver);
+  background:rgba(77,143,255,.06);color:var(--silver);text-decoration:none;
+  position:relative;overflow:hidden;transition:.4s ease;backdrop-filter:blur(12px);
+  isolation:isolate;font-size:.88rem;letter-spacing:.5px;
+}
+.btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,rgba(77,143,255,.16),rgba(77,143,255,.04));
+  transform:translateX(-100%);transition:.5s ease;z-index:-1;
+}
+.btn:hover::before{transform:translateX(0);}
+.btn:hover{transform:translateY(-4px) scale(1.02);cursor:none;color:var(--silver-bright);border-color:rgba(200,214,232,.3);box-shadow:0 16px 40px rgba(0,0,0,.4),0 0 20px rgba(77,143,255,.1);}
+
+/* CONTACT BUTTON */
+.contact-btn{
+  padding:15px 40px;border-radius:80px;background:none;color:#e8f0f8;
+  font-weight:600;letter-spacing:1px;position:relative;overflow:hidden;
+  border:1px solid rgba(200,214,232,.25);box-shadow:0 8px 30px rgba(77,143,255,.2);
+}
+.contact-btn span{position:relative;z-index:5;transition:.45s ease;font-family:'Syne',sans-serif;}
+.contact-btn::before{
+  content:'';position:absolute;width:0;height:0;left:50%;top:50%;
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle,rgba(77,142,255,.15),transparent 70%);transition:.55s ease;
+}
+.contact-btn::after{content:'↗';position:absolute;right:26px;top:50%;transform:translateY(-50%) rotate(-45deg);opacity:0;font-size:1rem;transition:.45s ease;}
+.contact-btn:hover{transform:translateY(-7px) scale(1.04) rotate(-1deg);border:1px solid #5781cf;letter-spacing:2px;color:#5781cf;box-shadow:0 20px 50px rgba(77,143,255,.3);}
+.contact-btn:hover::before{width:320px;height:320px;}
+.contact-btn:hover::after{opacity:1;transform:translateY(-50%) rotate(0deg);}
+.contact-btn:hover span{padding-right:18px;}
+
+/* FLOATING CARDS */
+.floating-card{
+  position:absolute;border:1px solid var(--border-silver);background:rgba(7,13,26,.7);
+  backdrop-filter:blur(20px);padding:13px 20px;border-radius:18px;
+  animation:floatCard 6s ease-in-out infinite alternate;
+  box-shadow:0 16px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(200,214,232,.08);
+  font-size:.82rem;color:var(--silver);letter-spacing:1.5px;font-family:'Syne',sans-serif;font-weight:600;
+}
+.card1{top:13%;left:13%;}
+.card3{top:55%;right:5%;animation-delay:2s;}
+@keyframes floatCard{0%{transform:translateY(0) rotate(-2deg);}100%{transform:translateY(22px) rotate(2deg);}}
+
+/* SECTIONS */
+section{padding:130px 8%;position:relative;}
+
+/* SECTION HEADER */
+.section-header{
+  display:flex;align-items:center;gap:24px;margin-bottom:60px;flex-wrap:wrap;
+}
+.section-title{
+  font-family:'Bebas Neue',sans-serif;font-size:6.2rem;line-height:1;
+  text-transform:uppercase;font-weight:800;letter-spacing:4px;
+  background:linear-gradient(135deg,var(--silver-bright),var(--silver),var(--silver-dim));
+  -webkit-background-clip:text;color:transparent;background-clip:text;
+  margin:0;white-space:nowrap;
+}
+.section-divider{
+  flex:1;display:flex;align-items:center;gap:16px;min-width:80px;
+}
+.section-divider-line{
+  flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(77,143,255,.6),rgba(77,143,255,.1));
+}
+.section-subtitle-tag{
+  font-family:'Syne',sans-serif;font-size:.72rem;letter-spacing:4px;
+  text-transform:uppercase;color:var(--silver-muted);white-space:nowrap;
+  padding:6px 14px;border:1px solid var(--border-silver);border-radius:20px;
+  background:rgba(77,143,255,.04);transition:.4px ease;
+}
+.section-subtitle-tag:hover{color:var(--accent);border-color:rgba(77,143,255,.3);}
+
+.silver-rule{display:block;width:50px;height:1px;background:linear-gradient(90deg,var(--accent),transparent);margin-bottom:50px;}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:center;position:relative;}
+.glass-card{
+  background:rgba(7,13,26,.65);border:1px solid var(--border-silver);
+  padding:38px;border-radius:26px;backdrop-filter:blur(25px);
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  position:relative;overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,.4),inset 0 1px 0 rgba(200,214,232,.07);
+  z-index:2;
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+.glass-card::before{
+  content:'';position:absolute;width:220px;height:220px;
+  background:radial-gradient(circle,rgba(77,143,255,.07),transparent 70%);
+  top:-70px;right:-70px;filter:blur(30px);
+}
+.glass-card:hover{
+  box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 40px rgba(77,143,255,.06);
+  border-color:rgba(200,214,232,.22);
+}
+.glass-card h3{font-family:'Syne',sans-serif;font-size:1.9rem;margin-bottom:18px;color:var(--silver-bright);font-weight:700;letter-spacing:1px;}
+.glass-card p{color:var(--silver-muted);line-height:1.9;font-weight:300;}
+.skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+.skill{
+  padding:9px 17px;border-radius:30px;background:rgba(77,143,255,.07);
+  border:1px solid var(--border-silver);
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease, padding .15s ease;
+  position:relative;overflow:hidden;cursor:none;font-weight:500;font-size:.82rem;color:var(--silver);
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+.skill::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(77,143,255,.18),rgba(77,143,255,.03));transform:translateY(100%) rotate(8deg);transition:.45s ease;}
+.skill::after{content:'✦';position:absolute;right:12px;top:50%;transform:translateY(-50%) scale(0) rotate(180deg);transition:.45s ease;font-size:.65rem;color:var(--accent);}
+.skill span{position:relative;z-index:2;}
+.skill:hover{
+  padding-right:32px;color:var(--silver-bright);
+  border-color:rgba(200,214,232,.3);
+  box-shadow:0 14px 32px rgba(0,0,0,.35),0 0 18px rgba(77,143,255,.12);
+  background:rgba(77,143,255,.12);
+}
+.skill:hover::before{transform:translateY(0) rotate(0deg);}
+.skill:hover::after{transform:translateY(-50%) scale(1) rotate(0deg);}
+
+/* ABOUT CENTER */
+.about-center{width:320px;display:flex;align-items:center;justify-content:center;position:relative;z-index:3;}
+.about-svg-lines{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:visible;}
+.about-photo-wrap{position:relative;width:260px;z-index:4;}
+.about-photo-wrap img{
+  width:200%;display:block;margin-left:-120px;object-fit:cover;
+  mix-blend-mode:lighten;filter:brightness(1.06) contrast(1.02) saturate(0.95);
+  -webkit-mask-image:radial-gradient(ellipse 88% 92% at 50% 46%,black 55%,transparent 100%);
+  mask-image:radial-gradient(ellipse 88% 92% at 50% 46%,black 55%,transparent 100%);
+  transition:.5s ease;
+}
+.about-photo-wrap:hover img{filter:brightness(1.1) contrast(1.04) saturate(1.05);}
+.about-photo-wrap::before{
+  content:'';position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
+  width:200px;height:60px;background:radial-gradient(ellipse,rgba(77,143,255,.35),transparent 70%);
+  filter:blur(18px);pointer-events:none;z-index:-1;
+}
+.about-node{
+  position:absolute;width:8px;height:8px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 3px rgba(77,143,255,.2),0 0 14px rgba(77,143,255,.9);
+  z-index:8;pointer-events:none;animation:nodePulse 2.2s ease-in-out infinite;
+}
+.about-node-left{left:-4px;top:50%;transform:translateY(-50%);animation-delay:0s;}
+.about-node-right{right:-4px;top:50%;transform:translateY(-50%);animation-delay:.5s;}
+.about-node-img-l{left:-4px;top:50%;transform:translateY(-50%);animation-delay:.2s;}
+.about-node-img-r{right:-4px;top:50%;transform:translateY(-50%);animation-delay:.7s;}
+@keyframes nodePulse{0%,100%{opacity:.55;transform:translateY(-50%) scale(1);}50%{opacity:1;transform:translateY(-50%) scale(1.55);}}
+
+/* PROJECTS */
+.projects {
+  min-height: auto;
+}
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+@media(max-width:1024px){
+  .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media(max-width:768px){
+  .project-grid { grid-template-columns: 1fr; }
+}
+.project-card {
+  height: 420px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--navy-2);
+  border: 1px solid var(--border-silver);
+  position: relative;
+  transition: box-shadow .6s cubic-bezier(.2,.8,.2,1), transform .6s cubic-bezier(.2,.8,.2,1);
+  transform-style: preserve-3d;
+  box-shadow: 0 20px 50px rgba(0,0,0,.5);
+  cursor: none;
+  will-change: transform;
+}
+.project-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: .8s ease;
+  filter: grayscale(.2) brightness(.45) saturate(.8);
+}
+.project-card:hover img {
+  transform: scale(1.08);
+  filter: grayscale(0) brightness(.75) saturate(1.1);
+}
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(4,8,15,.98) 0%, rgba(4,8,15,.5) 50%, rgba(4,8,15,.1) 100%);
+  transition: .6s ease;
+}
+.project-card:hover::before {
+  background: linear-gradient(to top, rgba(4,8,15,.98) 0%, rgba(4,8,15,.4) 40%, rgba(4,8,15,.05) 100%);
+}
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 28px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.project-tag {
+  display: inline-block;
+  color: var(--accent);
+  letter-spacing: 3px;
+  font-size: .65rem;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-family: 'Syne', sans-serif;
+  padding: 4px 10px;
+  border: 1px solid rgba(77,143,255,.3);
+  border-radius: 12px;
+  background: rgba(77,143,255,.06);
+  width: fit-content;
+  transform: translateY(80px);
+  opacity: .7;
+  transition: .5s ease;
+}
+.project-card:hover .project-tag {
+  transform: translateY(0);
+  opacity: 1;
+}
+.project-overlay h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6rem;
+  color: var(--silver-bright);
+  font-weight: 700;
+  transform: translateY(80px);
+  opacity: .85;
+  transition: .5s ease .05s;
+}
+.project-card:hover .project-overlay h3 {
+  transform: translateY(0);
+  opacity: 1;
+}
+.project-desc {
+  color: var(--silver-muted);
+  font-size: .82rem;
+  margin-top: 6px;
+  line-height: 1.5;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: .5s ease .1s;
+}
+.project-card:hover .project-desc {
+  transform: translateY(0);
+  opacity: 1;
+}
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: .5s ease .15s;
+}
+.project-card:hover .project-card-footer {
+  transform: translateY(0);
+  opacity: 1;
+}
+.project-view-btn {
+  font-size: .72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-family: 'Syne', sans-serif;
+  padding: 6px 14px;
+  border: 1px solid rgba(77,143,255,.4);
+  border-radius: 20px;
+  background: rgba(77,143,255,.07);
+  transition: .3s ease;
+}
+.project-card:hover .project-view-btn {
+  background: rgba(77,143,255,.15);
+}
+.project-number {
+  font-family: 'Syne', sans-serif;
+  font-size: .65rem;
+  color: var(--silver-muted);
+  letter-spacing: 2px;
+}
+
+/* GALLERY */
+.gallery-wrap{
+  perspective:1700px;
+  height:198vh;
+  margin-top: -400px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+
+}
+.gallery{
+  position:relative;width:340px;height:500px;
+  transform-style:preserve-3d;
+  animation:rotateGallery 20s linear infinite;
+}
+.gallery.paused{animation-play-state:paused;}
+@keyframes rotateGallery{from{transform:rotateY(0deg);}to{transform:rotateY(360deg);}}
+.gallery span{
+  position:absolute;width:100%;height:100%;
+  transform-origin:center;transform-style:preserve-3d;
+  transform:rotateY(calc(var(--i) * 45deg)) translateZ(430px);
+  border-radius:20px;overflow:hidden;
+  border:1px solid var(--border-silver);
+  box-shadow:0 20px 50px rgba(0,0,0,.6),inset 0 1px 0 rgba(200,214,232,.08);
+  transition:filter .55s ease, opacity .55s ease, transform .55s cubic-bezier(.2,.8,.2,1), box-shadow .55s ease;
+  cursor:none;
+}
+.gallery span img{
+  width:100%;height:100%;object-fit:cover;transition:1s ease;
+  filter:brightness(.7) grayscale(.3) saturate(.8);
+}
+.gallery span:hover img{transform:scale(1.08);filter:brightness(.9) grayscale(0) saturate(1.1);}
+.gallery.has-hover span.gallery-dim{
+  opacity:.3;
+  filter:blur(3px) brightness(.5);
+  transform:rotateY(calc(var(--i) * 45deg)) translateZ(430px) scale(.94);
+}
+.gallery.has-hover span.gallery-highlight{
+  opacity:1;
+  filter:none;
+  box-shadow:0 30px 80px rgba(77,143,255,.35),0 0 40px rgba(77,143,255,.2),inset 0 1px 0 rgba(200,214,232,.2);
+  border-color:rgba(77,143,255,.5);
+  z-index:10;
+}
+.gallery.has-hover span.gallery-highlight img{
+  filter:brightness(1) grayscale(0) saturate(1.15);
+}
+
+/* RESUME SECTION */
+.resume-section{text-align:center; height: 100vh; margin-top: -500px; margin-bottom: -100px;}
+.resume-box{
+  max-width:700px;margin:0 auto;padding:70px 60px;border-radius:34px;
+  
+  position:relative;overflow:hidden;
+}
+.resume-box::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent,rgba(77,143,255,.04),transparent);
+  transform:translateX(-100%);animation:shine 7s linear infinite;
+}
+.resume-icon{
+  width:80px;height:80px;border-radius:24px;
+  background:linear-gradient(135deg,rgba(77,143,255,.15),rgba(77,143,255,.04));
+  border:1px solid rgba(77,143,255,.25);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 28px;
+  font-size:2rem;color:var(--accent);animation:resumeFloat 4s ease-in-out infinite;
+  box-shadow:0 0 30px rgba(77,143,255,.12);
+}
+@keyframes resumeFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.resume-box h2{
+  font-family:'Syne',sans-serif;font-size:2.8rem;margin-bottom:16px;
+  background:linear-gradient(135deg,var(--silver-bright),var(--silver));
+  -webkit-background-clip:text;color:transparent;background-clip:text;font-weight:800;
+}
+.resume-box p{color:var(--silver-muted);line-height:1.9;margin-bottom:36px;font-weight:300;max-width:500px;margin-left:auto;margin-right:auto;}
+.resume-btn{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:16px 40px;border-radius:50px;border:1px solid rgba(77,143,255,.4);
+  background:rgba(77,143,255,.08);color:var(--silver-bright);text-decoration:none;
+  font-family:'Syne',sans-serif;font-weight:600;letter-spacing:2px;font-size:.9rem;
+  transition:.5s cubic-bezier(.2,.8,.2,1);position:relative;overflow:hidden;cursor:none;
+}
+.resume-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(77,143,255,.25),rgba(77,143,255,.05));
+  transform:translateX(-100%);transition:.5s ease;z-index:-1;
+}
+.resume-btn:hover::before{transform:translateX(0);}
+.resume-btn:hover{transform:translateY(-6px) scale(1.03);color:#fff;border-color:rgba(77,143,255,.7);box-shadow:0 16px 40px rgba(77,143,255,.25);}
+.resume-btn i{transition:.4s ease;}
+.resume-btn:hover i{transform:translateY(-2px) rotate(-10deg);}
+
+/* CONTACT */
+.contact-box{
+  text-align:center;padding:80px;border-radius:34px;background:rgba(7,13,26,.75);
+  border:1px solid var(--border-silver);backdrop-filter:blur(24px);overflow:hidden;position:relative;
+  box-shadow:0 30px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(200,214,232,.08);
+}
+.contact-box::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent,rgba(77,143,255,.05),transparent);
+  transform:translateX(-100%);animation:shine 7s linear infinite;
+}
+.contact-box::after{
+  content:'';position:absolute;width:600px;height:400px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(77,143,255,.07) 0%,transparent 70%);
+  left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;
+}
+.contact-box h2{
+  font-family:'Syne',sans-serif;font-size:3.6rem;margin-bottom:20px;
+  background:linear-gradient(135deg,var(--silver-bright),var(--silver));
+  -webkit-background-clip:text;color:transparent;background-clip:text;
+  font-weight:800;letter-spacing:2px;position:relative;z-index:1;
+}
+.contact-box p{max-width:620px;margin:auto;color:var(--silver-muted);line-height:1.9;margin-bottom:40px;font-weight:300;position:relative;z-index:1;}
+
+/* REVISED PROJECT MODAL DESIGN SYSTEM */
+.project-modal{
+  position:fixed;inset:0;background:rgba(4,8,15,.93);display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .5s cubic-bezier(.2,1,.2,1);z-index:999999;backdrop-filter:blur(20px);
+  padding:40px 20px;
+}
+.project-modal.active{opacity:1;pointer-events:auto;}
+.modal-content{
+  width:1000px;max-width:95%;max-height:90vh;overflow-y:auto;
+  background:var(--navy-1);border-radius:32px;
+  position:relative;transform:translateY(60px) scale(.96);transition:transform .55s cubic-bezier(.2,1,.2,1);
+  border:1px solid var(--border-silver);
+  box-shadow:0 50px 120px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.project-modal.active .modal-content{transform:translateY(0) scale(1);}
+
+.close-modal{
+  position:fixed;right:40px;top:40px;font-size:1.4rem;cursor:none;
+  color:var(--silver-muted);transition:.3s ease;z-index:100;
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--border-silver);
+  display:flex;align-items:center;justify-content:center;background:rgba(4,8,15,.8);
+  backdrop-filter:blur(8px);
+}
+.close-modal:hover{transform:rotate(90deg);color:var(--silver-bright);border-color:var(--accent);box-shadow:0 0 15px rgba(77,143,255,.3);}
+
+/* Hero/Large Feature Image */
+.modal-hero-banner{
+  position:relative;width:100%;height:480px;overflow:hidden;
+  border-bottom:1px solid var(--border-silver);
+}
+.modal-hero-banner img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 8s ease;
+}
+.modal-hero-banner:hover img{transform:scale(1.05);}
+.modal-hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom, rgba(7,13,26,0) 40%, rgba(7,13,26,.95) 100%);
+}
+
+/* Modal Body Layout */
+.modal-body{padding:45px 50px 60px;}
+.modal-meta-row{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:40px;margin-bottom:45px;border-bottom:1px solid var(--border-subtle);padding-bottom:35px;
+}
+.modal-title-area{flex:1;}
+.modal-title-area h2{
+  font-family:'Syne',sans-serif;font-size:2.8rem;color:var(--silver-bright);
+  font-weight:800;letter-spacing:-0.5px;margin-bottom:8px;
+}
+.modal-tagline-sub{
+  font-family:'Syne',sans-serif;font-size:.78rem;color:var(--accent);
+  letter-spacing:4px;text-transform:uppercase;
+}
+
+/* Structured Quick Information Grid */
+.modal-quick-info{
+  display:grid;grid-template-columns:repeat(4, 1fr);gap:20px;width:100%;
+  margin-bottom:45px;background:rgba(255,255,255,.01);
+  border:1px solid var(--border-silver);padding:24px;border-radius:20px;
+}
+.info-pill-item h5{
+  font-family:'Syne',sans-serif;font-size:.68rem;color:var(--silver-muted);
+  text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;
+}
+.info-pill-item p{
+  font-size:.88rem;color:var(--silver-bright);font-weight:500;line-height:1.4;
+}
+
+/* Document Sections */
+.modal-section-block{margin-bottom:50px;}
+.modal-section-block h3{
+  font-family:'Syne',sans-serif;font-size:1.15rem;color:var(--silver-bright);
+  text-transform:uppercase;letter-spacing:3px;margin-bottom:20px;
+  display:flex;align-items:center;gap:12px;
+}
+.modal-section-block h3::after{
+  content:'';flex:1;height:1px;background:var(--border-silver);
+}
+.modal-section-block p{
+  color:var(--silver-dim);line-height:1.85;font-size:.95rem;font-weight:300;
+}
+.problem-solution-box{
+  display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:20px;
+}
+.ps-card{
+  background:rgba(77,143,255,.02);border:1px solid var(--border-silver);
+  padding:28px;border-radius:20px;transition:transform .3s ease, border-color .3s ease;
+}
+.ps-card:hover{
+  transform:translateY(-4px);border-color:rgba(77,143,255,.3);
+  box-shadow:0 15px 35px rgba(0,0,0,.3);
+}
+.ps-card h4{
+  font-family:'Syne',sans-serif;font-size:.85rem;color:var(--accent);
+  text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;
+}
+
+/* Feature Numbered Listing Styles */
+.features-container-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px;
+}
+.feature-item-card{
+  background:var(--navy-2);border:1px solid var(--border-silver);
+  padding:28px;border-radius:20px;position:relative;overflow:hidden;
+  transition:transform .3s ease;
+}
+.feature-item-card:hover{transform:translateY(-5px);border-color:rgba(200,214,232,.25);}
+.feature-item-card .f-num{
+  font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;
+  color:rgba(77,143,255,.12);position:absolute;top:15px;right:20px;line-height:1;
+}
+.feature-item-card h4{
+  font-family:'Syne',sans-serif;font-size:.95rem;color:var(--silver-bright);
+  margin-bottom:10px;font-weight:700;position:relative;z-index:2;
+}
+.feature-item-card p{font-size:.84rem;line-height:1.6;color:var(--silver-muted);}
+
+/* Dynamic Image Showcase Block with Animation Containers */
+.modal-showcase-view{
+  margin-top:25px;border-radius:20px;overflow:hidden;
+  border:1px solid var(--border-silver);background:var(--navy-2);
+  position:relative;cursor:zoom-in;transform-style:preserve-3d;
+  transition:transform .4s ease, box-shadow .4s ease;
+}
+.modal-showcase-view:hover{
+  transform:scale(1.01) translateY(-2px);
+  box-shadow:0 20px 45px rgba(0,0,0,.4);
+}
+.modal-showcase-view img{width:100%;display:block;height:auto;object-fit:contain;}
+.image-caption-tag{
+  padding:14px 20px;background:rgba(4,8,15,.75);backdrop-filter:blur(10px);
+  font-family:'Syne',sans-serif;font-size:.68rem;letter-spacing:2px;
+  color:var(--silver-dim);text-transform:uppercase;border-top:1px solid var(--border-silver);
+}
+
+/* Core Technical Specs/Tags Grid */
+.modal-tech-tokens{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px;}
+.modal-tech-tokens span{
+  padding:8px 16px;background:rgba(77,143,255,.05);border:1px solid var(--border-silver);
+  border-radius:30px;font-size:.8rem;color:var(--silver);font-weight:500;
+  transition:all .3s ease;
+}
+.modal-tech-tokens span:hover{
+  background:var(--accent);color:var(--abyss);transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(77,143,255,.3);border-color:var(--accent);
+}
+
+/* Split Lists (e.g. Scope Matrix) */
+.modal-split-matrix{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.matrix-block-pane{background:rgba(255,255,255,.01);border:1px solid var(--border-silver);padding:24px;border-radius:16px;}
+.matrix-block-pane h4{font-family:'Syne',sans-serif;font-size:.78rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+.matrix-block-pane ul{list-style:none;}
+.matrix-block-pane li{font-size:.86rem;color:var(--silver-dim);line-height:1.6;margin-bottom:8px;display:flex;gap:10px;}
+.matrix-block-pane li::before{content:'→';color:var(--accent);}
+
+/* CONTACT MODAL */
+.contact-modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.85);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:.4s ease;
+  z-index:9999999;backdrop-filter:blur(16px);
+  padding:16px;
+}
+.contact-modal.active{opacity:1;pointer-events:auto;}
+.contact-modal-inner{
+  width:460px;max-width:95%;max-height:88vh;overflow-y:auto;
+  background:var(--navy-2);border-radius:24px;border:1px solid var(--border-silver);
+  padding:32px 36px;position:relative;transform:translateY(40px) scale(.95);
+  transition:.45s cubic-bezier(.2,.8,.2,1);box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 60px rgba(77,143,255,.06);
+  overflow-x:hidden;
+}
+.contact-modal-inner::-webkit-scrollbar{display:none;}
+.contact-modal.active .contact-modal-inner{transform:translateY(0) scale(1);}
+.contact-modal-inner::before{
+  content:'';position:absolute;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(77,143,255,.07),transparent 70%);
+  top:-80px;right:-80px;pointer-events:none;
+}
+.cmodal-close{
+  position:absolute;right:14px;top:12px;font-size:1.3rem;cursor:pointer;
+  color:var(--silver-muted);transition:.3s ease;width:32px;height:32px;
+  display:flex;align-items:center;justify-content:center;border-radius:10px;
+  border:1px solid var(--border-silver);background:rgba(0,0,0,.3);z-index:10;
+}
+.cmodal-close:hover{transform:rotate(90deg);color:var(--silver-bright);cursor: none;}
+.cmodal-top{text-align:center;margin-bottom:24px;}
+.cmodal-icon{
+  width:52px;height:52px;border-radius:16px;
+  background:linear-gradient(135deg,rgba(77,143,255,.15),rgba(77,143,255,.04));
+  border:1px solid rgba(77,143,255,.25);display:flex;align-items:center;
+  justify-content:center;font-size:1.3rem;color:var(--accent);margin:0 auto 14px;
+  animation:resumeFloat 3s ease-in-out infinite;
+}
+.cmodal-top h3{font-family:'Syne',sans-serif;font-size:1.5rem;color:var(--silver-bright);margin-bottom:4px;font-weight:700;}
+.cmodal-top p{color:var(--silver-muted);font-size:.82rem;}
+.cmodal-field{margin-bottom:14px;position:relative;}
+.cmodal-field label{display:block;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver-muted);margin-bottom:6px;font-family:'Syne',sans-serif;}
+.cmodal-field input,.cmodal-field textarea{
+  width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border-silver);
+  border-radius:12px;padding:11px 14px;color:var(--silver-bright);font-family:'Inter',sans-serif;
+  font-size:.85rem;outline:none;transition:.3s ease;resize:none;
+}
+.cmodal-field input:focus,.cmodal-field textarea:focus{border-color:rgba(77,143,255,.5);background:rgba(77,143,255,.04);box-shadow:0 0 0 3px rgba(77,143,255,.08);}
+.cmodal-field textarea{height:88px;}
+.cmodal-send{
+  width:100%;padding:13px;border-radius:50px;
+  background:linear-gradient(135deg,rgba(77,143,255,.25),rgba(77,143,255,.1));
+  border:1px solid rgba(77,143,255,.4);color:var(--silver-bright);
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;letter-spacing:2px;
+  cursor:none;transition:.4s ease;position:relative;overflow:hidden;
+}
+.cmodal-send span{position:relative;z-index:1;}
+.cmodal-send:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(77,143,255,.2);}
+.cmodal-success{text-align:center;display:none;padding:20px 0;}
+.cmodal-success i{font-size:3rem;color:var(--accent);margin-bottom:16px;display:block;animation:successPop .5s cubic-bezier(.2,.8,.2,1);}
+@keyframes successPop{0%{transform:scale(0) rotate(-20deg);}100%{transform:scale(1) rotate(0);}}
+.cmodal-success h4{font-family:'Syne',sans-serif;font-size:1.4rem;color:var(--silver-bright);margin-bottom:8px;}
+.cmodal-success p{color:var(--silver-muted);font-size:.85rem;}
+
+/* FOOTER */
+footer{padding:40px;text-align:center;color:var(--silver-muted);font-size:.82rem;letter-spacing:1.5px;border-top:1px solid var(--border-subtle);font-family:'Syne',sans-serif;}
+
+/* REVEAL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(70px);transition:1s ease;}
+.reveal.active{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-60px);transition:1s ease;}
+.reveal-left.active{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(60px);transition:1s ease;}
+.reveal-right.active{opacity:1;transform:translateX(0);}
+.reveal-scale{opacity:0;transform:scale(.88);transition:1s ease;}
+.reveal-scale.active{opacity:1;transform:scale(1);}
+
+/* FIXED STAGGER ANIMATIONS: Now targets ALL children within a stagger block */
+.stagger > * { opacity: 0; transform: translateY(30px); transition: .7s ease; }
+.stagger.active > * { opacity: 1; transform: none; }
+.stagger.active > *:nth-child(1) { transition-delay: .05s; }
+.stagger.active > *:nth-child(2) { transition-delay: .10s; }
+.stagger.active > *:nth-child(3) { transition-delay: .15s; }
+.stagger.active > *:nth-child(4) { transition-delay: .20s; }
+.stagger.active > *:nth-child(5) { transition-delay: .25s; }
+.stagger.active > *:nth-child(6) { transition-delay: .30s; }
+.stagger.active > *:nth-child(7) { transition-delay: .35s; }
+.stagger.active > *:nth-child(8) { transition-delay: .40s; }
+.stagger.active > *:nth-child(9) { transition-delay: .45s; }
+.stagger.active > *:nth-child(10) { transition-delay: .50s; }
+.stagger.active > *:nth-child(11) { transition-delay: .55s; }
+.stagger.active > *:nth-child(12) { transition-delay: .60s; }
+
+
+.page-overlay{
+  position:fixed;inset:0;background:var(--abyss);z-index:99999999;
+  transform:scaleY(1);transform-origin:top;
+  transition:transform 1.1s cubic-bezier(.76,0,.24,1);
+}
+.page-overlay.done{transform:scaleY(0);transform-origin:bottom;}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+  .about-grid{grid-template-columns:1fr 180px 1fr;}
+  .about-center{width:180px;height:300px;margin:0;}
+  .modal-quick-info{grid-template-columns:1fr 1fr;}
+  .problem-solution-box, .modal-split-matrix{grid-template-columns:1fr;}
+  .features-container-grid{grid-template-columns:1fr;}
+  .glass-card{padding:26px 18px;}
+  .about-photo-wrap{width:160px;}
+  .about-photo-wrap img{width:180%;margin-left:-72px;}
+}
+@media(max-width:768px){
+  .side-nav a::after{display:none;}
+  .social-dock,.email-dock{display:none;}
+  .section-title{font-size:2.8rem;}
+  .modal-quick-info{grid-template-columns:1fr;}
+  .modal-body{padding:30px 24px;}
+}
+
+/* =============================================
+   MOBILE RESPONSIVE — PHONE (≤480px) & SMALL TABLET (≤640px)
+   ============================================= */
+@media(max-width:640px){
+
+  /* Hide docks, restore cursor */
+  .social-dock,.email-dock{display:none;}
+  body{cursor:auto;}
+  .pen-cursor,.cursor-glow,#trailCanvas{display:none;}
+
+  /* TOP NAVBAR — convert side nav to horizontal top bar */
+  .side-nav{
+    left:0; top:0; right:0;
+    transform:none;
+    width:100%; height:60px;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 20px;
+    border-radius:0;
+    border-bottom:1px solid var(--border-silver);
+    gap:0;
+    background:rgba(7,13,26,.88);
+  }
+  .logo-mark{width:38px;height:38px;border-radius:12px;flex-shrink:0;}
+  .logo-mark img{width:28px;}
+  .side-nav ul{flex-direction:row;gap:6px;}
+  .side-nav a{width:42px;height:42px;border-radius:12px;}
+  .side-nav a:hover{transform:translateY(-3px) scale(1.06);}
+  .side-nav a::after{
+    left:50%;top:52px;bottom:auto;
+    transform:translateX(-50%) translateY(0) scale(.85);
+    white-space:nowrap;
+  }
+  .side-nav a:hover::after{transform:translateX(-50%) translateY(0) scale(1);}
+
+  /* Push sections down so content clears the top nav */
+  section{padding:100px 5% 60px;}
+  .hero{padding-top:60px;min-height:100svh;}
+
+  /* Sections: tighter padding, account for no side-nav */
+  section{padding:80px 5% 60px;}
+
+  /* LOADER */
+  .loader img{width:220px;}
+  .loader-ring:nth-child(3){width:300px;height:300px;}
+  .loader-ring:nth-child(4){width:400px;height:400px;}
+  .loader-orbit{width:220px;height:220px;}
+  .loader-orbit-2{width:130px;height:130px;}
+  .loader-text p{left:30%;top:72%;}
+  .loader-bar-wrap{width:160px;}
+  .loader-name{font-size:1.1rem;letter-spacing:8px;}
+
+  /* HERO */
+  .hero{padding:0 5%;min-height:100svh;}
+  .hero h1{
+    font-size:clamp(5.5rem,22vw,9rem);
+    letter-spacing:2px;
+    line-height:.9;
+  }
+  .hero small{font-size:.6rem;letter-spacing:5px;}
+  .hero p{font-size:.88rem;margin:20px auto;line-height:1.8;}
+  .hero-btns{gap:12px;flex-direction:column;align-items:center;}
+  .btn{padding:12px 24px;font-size:.84rem;}
+  .contact-btn{padding:12px 32px;}
+
+  /* Floating cards — tuck them in so they don't overflow */
+  .floating-card{font-size:.7rem;padding:9px 14px;border-radius:14px;}
+  .card1{top:8%;left:4%;}
+  .card3{top:auto;bottom:10%;right:4%;}
+
+  /* SECTION HEADER */
+  .section-header{gap:12px;margin-bottom:36px;}
+  .section-title{font-size:2.4rem;white-space:normal;letter-spacing:2px;}
+  .section-subtitle-tag{font-size:.62rem;letter-spacing:2px;padding:5px 10px;}
+
+  /* ABOUT — keep 3-column layout, shrink columns */
+  .about-grid{grid-template-columns:1fr 100px 1fr;gap:0;align-items:center;}
+  .glass-card{padding:18px 12px;border-radius:18px;}
+  .glass-card h3{font-size:1rem;margin-bottom:10px;}
+  .glass-card p{font-size:.75rem;line-height:1.6;}
+  .about-center{width:100px;height:220px;margin:0;}
+  .about-photo-wrap{width:90px;}
+  .about-photo-wrap img{width:200%;margin-left:-46px;}
+  .skills{gap:6px;margin-top:14px;}
+  .skill{padding:5px 10px;font-size:.7rem;}
+  .skill::after{display:none;}
+  .about-node{width:6px;height:6px;}
+
+  /* PROJECT GRID */
+  .project-grid{grid-template-columns:1fr;gap:16px;}
+  .project-card{height:340px;}
+  /* Always show overlay content on mobile (no hover) */
+  .project-card .project-tag,
+  .project-card .project-overlay h3,
+  .project-card .project-desc,
+  .project-card .project-card-footer{
+    transform:translateY(0)!important;
+    opacity:1!important;
+  }
+  .project-overlay{padding:20px;}
+  .project-overlay h3{font-size:1.3rem;}
+  .project-desc{font-size:.8rem;}
+
+  /* GALLERY — shrink 3D ring so it fits */
+  .gallery-wrap{
+    height:100vh;
+    margin-top:-200px;
+  }
+  .gallery{width:220px;height:320px;}
+  .gallery span{
+    transform:rotateY(calc(var(--i) * 45deg)) translateZ(260px);
+  }
+  .gallery.has-hover span.gallery-dim{
+    transform:rotateY(calc(var(--i) * 45deg)) translateZ(260px) scale(.94);
+  }
+
+  /* RESUME */
+  .resume-section{height:auto;margin-top:-100px;margin-bottom:0;}
+  .resume-box{padding:40px 24px;border-radius:24px;}
+  .resume-box h2{font-size:2rem;}
+  .resume-box p{font-size:.88rem;}
+  .resume-btn{padding:13px 28px;font-size:.82rem;letter-spacing:1px;}
+
+  /* CONTACT */
+  .contact-box{padding:40px 24px;border-radius:24px;}
+  .contact-box h2{font-size:2.2rem;letter-spacing:1px;}
+  .contact-box p{font-size:.88rem;}
+
+  /* PROJECT MODAL */
+  .project-modal{padding:16px 8px;}
+  .modal-content{max-width:100%;border-radius:22px;max-height:94vh;}
+  .modal-hero-banner{height:220px;}
+  .modal-body{padding:22px 18px 40px;}
+  .modal-title-area h2{font-size:1.8rem;}
+  .modal-meta-row{flex-direction:column;gap:16px;margin-bottom:28px;padding-bottom:24px;}
+  .modal-quick-info{grid-template-columns:1fr 1fr;gap:14px;padding:16px;border-radius:14px;}
+  .info-pill-item p{font-size:.82rem;}
+  .modal-section-block h3{font-size:.95rem;letter-spacing:2px;}
+  .modal-section-block p{font-size:.88rem;}
+  .features-container-grid{grid-template-columns:1fr;}
+  .ps-card{padding:20px;}
+  .close-modal{right:14px;top:14px;width:38px;height:38px;font-size:1.1rem;}
+
+  /* CONTACT MODAL */
+  .contact-modal-inner{padding:24px 20px;border-radius:20px;}
+  .cmodal-top h3{font-size:1.2rem;}
+  .cmodal-field input,.cmodal-field textarea{font-size:.82rem;padding:10px 12px;}
+
+  /* FOOTER */
+  footer{padding:28px 20px;font-size:.74rem;letter-spacing:1px;}
+}
+
+/* Very small phones (≤380px) */
+@media(max-width:380px){
+  .hero h1{font-size:clamp(4.5rem,20vw,7rem);}
+  .section-title{font-size:2rem;}
+  .contact-box h2{font-size:1.8rem;}
+  .modal-quick-info{grid-template-columns:1fr;}
+  .gallery{width:180px;height:270px;}
+  .gallery span{transform:rotateY(calc(var(--i) * 45deg)) translateZ(200px);}
+  .gallery.has-hover span.gallery-dim{transform:rotateY(calc(var(--i) * 45deg)) translateZ(200px) scale(.94);}
+  /* Keep 3-col about, just tighter */
+  .about-grid{grid-template-columns:1fr 80px 1fr;}
+  .about-center{width:80px;height:180px;}
+  .about-photo-wrap{width:72px;}
+  .about-photo-wrap img{width:210%;margin-left:-38px;}
+  .glass-card{padding:14px 8px;}
+  .glass-card h3{font-size:.82rem;letter-spacing:0;}
+  .glass-card p{font-size:.68rem;}
+  .skill{padding:4px 8px;font-size:.65rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-overlay" id="pageOverlay"></div>
+
+<div class="loader" id="loader">
+  <div class="loader-ring"></div>
+  <div class="loader-ring"></div>
+  <div class="loader-ring"></div>
+  <div class="loader-ring"></div>
+  <div class="loader-text">
+    <img src="/Web-Assets/Wlogo.png" style="width:200px; height:auto; display:block; margin:0 auto 15px;">
+    <p style="text-align:center; font-family:'Syne'; font-size:.7rem; letter-spacing:4px; text-transform:uppercase; color:var(--silver-dim);">Loading Creative Vision</p>
+    <div class="loader-counter">0%</div>
+  </div>
+</div>
+
+<canvas id="bgCanvas"></canvas>
+<div class="noise"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="pen-cursor"><i class="fa-solid fa-pen-nib"></i></div>
+<canvas id="trailCanvas"></canvas>
+
+<nav class="side-nav">
+  <div class="logo-mark"><img src="/Web-Assets/Wlogo.png" alt=""></div>
+  <ul>
+    <li><a href="#about"    data-text="About"><i class="fa-solid fa-user"></i></a></li>
+    <li><a href="#projects" data-text="Projects"><i class="fa-solid fa-layer-group"></i></a></li>
+    <li><a href="#contact"  data-text="Contact"><i class="fa-solid fa-envelope"></i></a></li>
+  </ul>
+</nav>
+
+<div class="social-dock">
+  <a href="https://www.instagram.com/wheswhess/" target="_blank" class="social-icon" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+  <a href="https://www.tiktok.com/@www_designs?is_from_webapp=1&sender_device=pc"    target="_blank" class="social-icon" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+  <a href="https://www.facebook.com/whestlee.cunanan/?viewas=&should_open_composer=false&show_switched_toast=false&show_invite_to_follow=false&show_switched_tooltip=false&show_podcast_settings=false&show_community_review_changes=false&show_community_rollback=false&show_follower_visibility_disclosure=false&bypass_exit_warning=true"  target="_blank" class="social-icon" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+
+</div>
+
+<div class="email-dock">
+  <a href="mailto:whestleedcunanan@gmail.com" class="email-link">whestleedcunanan@gmail.com</a>
+</div>
+
+<section class="hero">
+  <div class="floating-card card1">UI/UX Designer</div>
+  <div class="floating-card card3">Graphic Designer</div>
+  <div class="hero-content reveal active">
+    <small>Aspiring Graphic &amp; UI/UX Designer</small>
+    <h1><span class="gradient-text">PORTFOLIO</span></h1>
+    <p>I'm Whestlee — an aspiring Graphic Designer &amp; UI/UX Designer focused on building immersive visuals, interactive interfaces, and modern digital experiences that combine creativity, storytelling, and functionality.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn">View Projects</a>
+      <button class="btn contact-btn" id="heroHireBtn"><span>Hire Me</span></button>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="reveal">
+  <div class="section-header">
+    <h2 class="section-title">About Me</h2>
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <span class="section-subtitle-tag">Skills &amp; Background</span>
+    </div>
+  </div>
+  <div class="about-grid" id="aboutGrid">
+    <div class="glass-card reveal-left" id="leftCard">
+      <div class="about-node about-node-right" id="nodeRight"></div>
+      <h3>TECHNICAL SKILLS</h3>
+      <p>I create digital experiences that blend creativity and functionality. From bold graphics and promotional materials to user-focused interfaces, I aim to design visuals that are both impactful and memorable.</p>
+      <div class="skills stagger">
+        <div class="skill"><span>Figma</span></div>
+        <div class="skill"><span>Photoshop</span></div>
+        <div class="skill"><span>Illustrator</span></div>
+        <div class="skill"><span>UI/UX</span></div>
+        <div class="skill"><span>Capcut</span></div>
+        <div class="skill"><span>HTML/CSS/JS</span></div>
+      </div>
+    </div>
+    <div class="about-center" id="aboutCenter">
+      <svg class="about-svg-lines" id="aboutSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="about-photo-wrap" id="aboutPhotoWrap">
+        <img src="../Portfolio-2026/Web-Assets/me.png" alt="Whestlee">
+        <div class="about-node about-node-img-l" id="nodeImgL"></div>
+        <div class="about-node about-node-img-r" id="nodeImgR"></div>
+      </div>
+    </div>
+    <div class="glass-card reveal-right" id="rightCard">
+      <div class="about-node about-node-left" id="nodeLeft"></div>
+      <h3>SOFT SKILLS</h3>
+      <div class="skills stagger">
+        <div class="skill"><span>Teamwork &amp; collaboration</span></div>
+        <div class="skill"><span>Adaptability &amp; willingness to learn</span></div>
+        <div class="skill"><span>Attention to detail</span></div>
+        <div class="skill"><span>Design Thinking</span></div>
+        <div class="skill"><span>Empathy for users</span></div>
+        <div class="skill"><span>Openness to feedback</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="projects reveal" id="projects">
+  <div class="section-header">
+    <h2 class="section-title">Projects</h2>
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <span class="section-subtitle-tag">Designs & UI/UX</span>
+    </div>
+  </div>
+  <div class="project-grid stagger" id="projectGrid">
+    <div class="project-card" data-id="0">
+      <img src="../Portfolio-2026/Project-Assets/Project-01/attendify.png">
+      <div class="project-overlay">
+        <div class="project-tag">UI/UX Design</div>
+        <h3>Attendify</h3>
+        <p class="project-desc">Automated school student position and presence tracking camera platform interface.</p>
+        <div class="project-card-footer">
+          <span class="project-view-btn">View Case Study</span>
+          <span class="project-number">01</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" data-id="1">
+      <img src="../Portfolio-2026/Project-Assets/Project-02/hiring.png">
+      <div class="project-overlay">
+        <div class="project-tag">Social Media Design</div>
+        <h3>Recruitment Campaigns</h3>
+        <p class="project-desc">Designed engaging hiring posters and promotional graphics for social channels.</p>
+        <div class="project-card-footer">
+          <span class="project-view-btn">View Design</span>
+          <span class="project-number">02</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" data-id="2">
+      <img src="../Portfolio-2026/Project-Assets/Project-03/ferrari.jpg">
+      <div class="project-overlay">
+        <div class="project-tag">SOCIAL MEDIA DESIGN</div>
+        <h3>Canadian Grand Prix 2026</h3>
+        <p class="project-desc">Promotional social media graphic inspired by Formula 1 racing ecosystem.</p>
+        <div class="project-card-footer">
+          <span class="project-view-btn">View Design</span>
+          <span class="project-number">03</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" data-id="3">
+      <img src="../Portfolio-2026/Project-Assets/Project-04/bulaone.png">
+      <div class="project-overlay">
+        <div class="project-tag">UI/UX Design</div>
+        <h3>BulaOne</h3>
+        <p class="project-desc">A modern barangay website built to digitize community services and requests.</p>
+        <div class="project-card-footer">
+          <span class="project-view-btn">View Case Study</span>
+          <span class="project-number">04</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" data-id="4">
+      <img src="../Portfolio-2026/Project-Assets/Project-05/bodega.png">
+      <div class="project-overlay">
+        <div class="project-tag">Sales Promotion Banner</div>
+        <h3>Earth Buddy</h3>
+        <p class="project-desc">a product-focused marketing graphic to highlight special offers and featured items.</p>
+        <div class="project-card-footer">
+          <span class="project-view-btn">View Design</span>
+          <span class="project-number">05</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" data-id="5">
+      <img src="../Portfolio-2026/Project-Assets/Project-06/SquidGame.jpg">
+      <div class="project-overlay">
+        <div class="project-tag">Entertainment Poster Design</div>
+        <h3>Squid Game</h3>
+        <p class="project-desc">A fan-made entertainment poster showcasing suspense and visual storytelling.</p>
+        <div class="project-card-footer">
+          <span class="project-view-btn">View Design</span>
+          <span class="project-number">06</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" data-id="6">
+      <img src="../Portfolio-2026/Project-Assets/Project-07/hausland.png">
+      <div class="project-overlay">
+        <div class="project-tag">UI/UX Design</div>
+        <h3>The Pavillion</h3>
+        <p class="project-desc">A mobile dashboard simplifying property browsing, booking tracking, and status updates.</p>
+        <div class="project-card-footer">
+          <span class="project-view-btn">View Case Study</span>
+          <span class="project-number">07</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" data-id="7">
+      <img src="../Portfolio-2026/Project-Assets/Project-08/helmet.png">
+      <div class="project-overlay">
+        <div class="project-tag">Social Media Advertising</div>
+        <h3>GILLE Helmet</h3>
+        <p class="project-desc">A cinematic key visual concept for GILLE Helmets using advanced photo manipulation.</p>
+        <div class="project-card-footer">
+          <span class="project-view-btn">View Design</span>
+          <span class="project-number">08</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" data-id="8">
+      <img src="../Portfolio-2026/Project-Assets/Project-09/Milk.jpg">
+      <div class="project-overlay">
+        <div class="project-tag">Social Media Advertising</div>
+        <h3>Bear Brand</h3>
+        <p class="project-desc">A playful commercial spec ad for Nestlé Bear Brand using surreal image manipulation.</p>
+        <div class="project-card-footer">
+          <span class="project-view-btn">View Design</span>
+          <span class="project-number">09</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card" data-id="10">
+      <img src="../Portfolio-2026/Project-Assets/Project-10/biryani.jpg">
+      <div class="project-overlay">
+        <div class="project-tag">Food Advertising Design</div>
+        <h3>Biryani Posters</h3>
+        <p class="project-desc">A commercial flyer campaign produced for Boy B's Biryani to boost retail sales.</p>
+        <div class="project-card-footer">
+          <span class="project-view-btn">View Design</span>
+          <span class="project-number">10</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" data-id="11">
+      <img src="../Portfolio-2026/Project-Assets/Project-11/NHD.jpg">
+      <div class="project-overlay">
+        <div class="project-tag">POSTER DESIGN</div>
+        <h3>National Heroes Day</h3>
+        <p class="project-desc">A commemorative scrapbook-style graphic designed for National Heroes Day.</p>
+        <div class="project-card-footer">
+          <span class="project-view-btn">View Design</span>
+          <span class="project-number">11</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="reveal">
+  <div class="gallery-wrap">
+    <div class="gallery" id="galleryRing">
+      <span style="--i:1"><img src="../Portfolio-2026/Gallery/LycorisRecoil.jpg"></span>
+      <span style="--i:2"><img src="../Portfolio-2026/Gallery/MAX-3.jpg"></span>
+      <span style="--i:3"><img src="../Portfolio-2026/Gallery/Yone.jpg"></span>
+      <span style="--i:4"><img src="../Portfolio-2026/Gallery/REDBOL.jpg"></span>
+      <span style="--i:5"><img src="../Portfolio-2026/Gallery/P3.jpg"></span>
+      <span style="--i:6"><img src="../Portfolio-2026/Gallery/Wedding.png"></span>
+      <span style="--i:7"><img src="../Portfolio-2026/Gallery/SXF.png"></span>
+      <span style="--i:8"><img src="../Portfolio-2026/Gallery/Frame-35.png"></span>
+    </div>
+  </div>
+</section>
+
+<section id="resume" class="resume-section reveal-scale">
+  <div class="resume-box reveal-scale">
+    <div class="resume-icon"><i class="fa-solid fa-file-lines"></i></div>
+    <h2>My Resume</h2>
+    <p>Get a full overview of my design experience, skills, education, and project history in a single document.</p>
+    <a href="../Portfolio-2026/Web-Assets/Resume-Whestlee Cunanan.pdf" download class="resume-btn">
+      <i class="fa-solid fa-arrow-down"></i>
+      <span>Download Resume</span>
+      <i class="fa-solid fa-file-pdf"></i>
+    </a>
+  </div>
+</section>
+
+<section id="contact" class="reveal">
+  <div class="section-header">
+    <h2 class="section-title">Contact</h2>
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <span class="section-subtitle-tag">Let's Collaborate</span>
+    </div>
+  </div>
+  <div class="contact-box">
+    <h2>Let's Build Something Amazing.</h2>
+    <p>Looking for a creative designer who can turn ideas into engaging visuals and modern digital experiences? Let's connect and create something impactful.</p>
+    <button style="cursor:none;" class="btn contact-btn" id="contactGetBtn"><span>Get In Touch</span></button>
+  </div>
+</section>
+
+<div id="projectModal" class="project-modal">
+  <span class="close-modal" id="closeProjectModal">&times;</span>
+  <div class="modal-content" id="modalContentElement">
+    <div id="modalDynamicTarget"></div>
+  </div>
+</div>
+
+<div id="contactModal" class="contact-modal">
+  <div class="contact-modal-inner">
+    <span class="cmodal-close" id="closeContactModal">&times;</span>
+    <div class="cmodal-top">
+      <div class="cmodal-icon"><i class="fa-solid fa-paper-plane"></i></div>
+      <h3>Send Me a Message</h3>
+      <p>I'll get back to you within 24 hours.</p>
+    </div>
+    <div id="cmodalForm">
+      <div class="cmodal-field">
+        <label>Your Name</label>
+        <input type="text" id="cName" placeholder="e.g. Juan dela Cruz">
+      </div>
+      <div class="cmodal-field">
+        <label>Your Email</label>
+        <input type="email" id="cEmail" placeholder="you@example.com">
+      </div>
+      <div class="cmodal-field">
+        <label>Subject</label>
+        <input type="text" id="cSubject" placeholder="Project inquiry, collaboration...">
+      </div>
+      <div class="cmodal-field">
+        <label>Message</label>
+        <textarea id="cMessage" placeholder="Tell me about your project or idea..."></textarea>
+      </div>
+      <button class="cmodal-send" id="cSendBtn"><span>Send Message &nbsp;✦</span></button>
+    </div>
+    <div class="cmodal-success" id="cSuccess">
+      <i class="fa-solid fa-circle-check"></i>
+      <h4>Message Sent!</h4>
+      <p>Thanks for reaching out, Whestlee will reply to you soon.</p>
+    </div>
+  </div>
+</div>
+
+<footer>Designed &amp; Developed by Whestlee &copy; 2026</footer>
+
+<script>
+/* PAGE TRANSITION */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{ document.getElementById('pageOverlay').classList.add('done'); },100);
+});
+
+/* LOADER */
+const loader=document.querySelector('.loader');
+const counter=document.querySelector('.loader-counter');
+let count=0;
+const updateCounter=setInterval(()=>{
+  count++;
+  counter.innerHTML=count+'%';
+  if(count>=100){
+    clearInterval(updateCounter);
+    loader.style.opacity='0';
+    loader.style.transition='1s ease';
+    setTimeout(()=>{loader.style.display='none';},1000);
+  }
+},18);
+
+/* CURSOR */
+const penCursor=document.querySelector('.pen-cursor');
+const cursorGlow=document.getElementById('cursorGlow');
+let mouseX=0,mouseY=0;
+document.addEventListener('mousemove',(e)=>{
+  mouseX=e.clientX; mouseY=e.clientY;
+  penCursor.style.left=mouseX+'px'; penCursor.style.top=mouseY+'px';
+  cursorGlow.style.left=mouseX+'px'; cursorGlow.style.top=mouseY+'px';
+});
+document.querySelectorAll('a,.project-card,.glass-card,.skill,.btn,.social-icon,.resume-btn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    penCursor.style.transform='translate(-50%,-50%) rotate(0deg) scale(1.5)';
+    penCursor.style.filter='drop-shadow(0 0 16px rgba(77,143,255,.9))';
+  });
+  el.addEventListener('mouseleave',()=>{
+    penCursor.style.transform='translate(-50%,-50%) rotate(-25deg) scale(1)';
+    penCursor.style.filter='drop-shadow(0 0 10px rgba(77,143,255,.7))';
+  });
+});
+
+/* HERO TRAIL */
+const trailCanvas=document.getElementById('trailCanvas');
+const tctx=trailCanvas.getContext('2d');
+trailCanvas.width=window.innerWidth; trailCanvas.height=window.innerHeight;
+let trail=[];
+document.addEventListener('mousemove',(e)=>{
+  const hero=document.querySelector('.hero');
+  const heroRect=hero.getBoundingClientRect();
+  if(e.clientY>=heroRect.top&&e.clientY<=heroRect.bottom){
+    trail.push({x:e.clientX,y:e.clientY,life:1});
+  }
+});
+function animateTrail(){
+  tctx.clearRect(0,0,trailCanvas.width,trailCanvas.height);
+  for(let i=0;i<trail.length;i++){
+    const p=trail[i];
+    tctx.beginPath();
+    if(i>0){tctx.moveTo(trail[i-1].x,trail[i-1].y);tctx.lineTo(p.x,p.y);}
+    tctx.strokeStyle=`rgba(77,143,255,${p.life*0.22})`;tctx.lineWidth=1.5;tctx.stroke();
+    p.life-=0.02;
+  }
+  trail=trail.filter(p=>p.life>0);
+  requestAnimationFrame(animateTrail);
+}
+animateTrail();
+
+/* SCROLL REVEAL */
+const allReveals=document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale,.stagger');
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('active');}});
+},{threshold:.12});
+allReveals.forEach(el=>observer.observe(el));
+
+/* HERO PARALLAX */
+window.addEventListener('scroll',()=>{
+  const scrolled=window.pageYOffset;
+  if(document.querySelector('.hero-content')) {
+    document.querySelector('.hero-content').style.transform=`translateY(${scrolled*0.2}px)`;
+  }
+});
+
+/* BACKGROUND PARTICLES */
+const canvas=document.getElementById('bgCanvas');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+const particles=[];
+for(let i=0;i<160;i++){
+  particles.push({
+    x:Math.random()*canvas.width, y:Math.random()*canvas.height,
+    size:Math.random()*1.8+.5,
+    speedX:(Math.random()-.5)*.3, speedY:(Math.random()-.5)*.3
+  });
+}
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x;
+      const dy=particles[i].y-particles[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<120){
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x,particles[i].y);
+        ctx.lineTo(particles[j].x,particles[j].y);
+        ctx.strokeStyle=`rgba(77,143,255,${(1-dist/120)*.18})`;
+        ctx.lineWidth=.6; ctx.stroke();
+      }
+    }
+  }
+  particles.forEach(p=>{
+    p.x+=p.speedX; p.y+=p.speedY;
+    const dx=mouseX-p.x, dy=mouseY-p.y;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    const maxDist=150;
+    if(dist<maxDist){
+      const angle=Math.atan2(dy,dx);
+      const force=(maxDist-dist)/maxDist;
+      p.x-=Math.cos(angle)*force*6;
+      p.y-=Math.sin(angle)*force*6;
+    }
+    if(p.x>canvas.width)p.x=0; if(p.x<0)p.x=canvas.width;
+    if(p.y>canvas.height)p.y=0; if(p.y<0)p.y=canvas.height;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fillStyle='rgba(77,143,255,.28)'; ctx.fill();
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+/* RESIZE */
+window.addEventListener('resize',()=>{
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  trailCanvas.width=window.innerWidth; trailCanvas.height=window.innerHeight;
+  drawAboutConnectors();
+});
+
+/* ABOUT SVG CONNECTORS */
+function drawAboutConnectors(){
+  const svg=document.getElementById('aboutSvg');
+  const leftCard=document.getElementById('leftCard');
+  const rightCard=document.getElementById('rightCard');
+  const photoWrap=document.getElementById('aboutPhotoWrap');
+  const center=document.getElementById('aboutCenter');
+  if(!svg||!leftCard||!rightCard||!photoWrap)return;
+  svg.innerHTML='';
+  const lcRect=leftCard.getBoundingClientRect();
+  const rcRect=rightCard.getBoundingClientRect();
+  const imgRect=photoWrap.getBoundingClientRect();
+  const svgRect=center.getBoundingClientRect();
+  if(lcRect.width>0&&rcRect.width>0&&imgRect.width>0){
+    const totalLeft=lcRect.left-svgRect.left;
+    const totalRight=rcRect.right-svgRect.left;
+    const svgW=totalRight-totalLeft;
+    svg.style.cssText=`position:absolute;top:0;left:${totalLeft}px;width:${svgW}px;height:${svgRect.height}px;overflow:visible;`;
+    const ox=svgRect.left+totalLeft,oy=svgRect.top;
+    const ax=lcRect.right-ox,ay=lcRect.top+lcRect.height/2-oy;
+    const bx=imgRect.left-ox,by=imgRect.top+imgRect.height/2-oy;
+    const cx2=imgRect.right-ox,cy=imgRect.top+imgRect.height/2-oy;
+    const dx=rcRect.left-ox,dy=rcRect.top+rcRect.height/2-oy;
+    function makeLine(x1,y1,x2,y2,delay){
+      const mid=(x1+x2)/2;
+      const d=`M ${x1} ${y1} C ${mid} ${y1}, ${mid} ${y2}, ${x2} ${y2}`;
+      const pathId='cp'+Math.random().toString(36).slice(2);
+      const pathRef=document.createElementNS('http://www.w3.org/2000/svg','path');
+      pathRef.setAttribute('d',d);pathRef.setAttribute('id',pathId);pathRef.setAttribute('fill','none');pathRef.setAttribute('stroke','none');
+      const glow=document.createElementNS('http://www.w3.org/2000/svg','path');
+      glow.setAttribute('d',d);glow.setAttribute('stroke','rgba(77,143,255,0.2)');glow.setAttribute('stroke-width','5');glow.setAttribute('fill','none');glow.setAttribute('filter','blur(4px)');
+      const line=document.createElementNS('http://www.w3.org/2000/svg','path');
+      line.setAttribute('d',d);line.setAttribute('stroke','rgba(77,143,255,0.6)');line.setAttribute('stroke-width','1.5');line.setAttribute('fill','none');line.setAttribute('stroke-dasharray','6 4');
+      const animDash=document.createElementNS('http://www.w3.org/2000/svg','animate');
+      animDash.setAttribute('attributeName','stroke-dashoffset');animDash.setAttribute('from','0');animDash.setAttribute('to','-20');animDash.setAttribute('dur','1.4s');animDash.setAttribute('begin',delay+'s');animDash.setAttribute('repeatCount','indefinite');
+      line.appendChild(animDash);
+      const animOp=document.createElementNS('http://www.w3.org/2000/svg','animate');
+      animOp.setAttribute('attributeName','opacity');animOp.setAttribute('values','0.4;1;0.4');animOp.setAttribute('dur','3s');animOp.setAttribute('begin',delay+'s');animOp.setAttribute('repeatCount','indefinite');
+      line.appendChild(animOp);
+      const particle=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      particle.setAttribute('r','3');particle.setAttribute('fill','rgba(100,163,255,0.95)');
+      particle.setAttribute('filter','url(#gf)');
+      const motionFwd=document.createElementNS('http://www.w3.org/2000/svg','animateMotion');
+      motionFwd.setAttribute('dur','2.2s');motionFwd.setAttribute('begin',delay+'s');motionFwd.setAttribute('repeatCount','indefinite');
+      const mref=document.createElementNS('http://www.w3.org/2000/svg','mpath');
+      mref.setAttributeNS('http://www.w3.org/1999/xlink','xlink:href','#'+pathId);
+      motionFwd.appendChild(mref);particle.appendChild(motionFwd);
+      const opA=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      opA.setAttribute('attributeName','opacity');opA.setAttribute('values','0;1;1;0');opA.setAttribute('keyTimes','0;0.05;0.9;1');opA.setAttribute('dur','2.2s');opA.setAttribute('begin',delay+'s');opA.setAttribute('repeatCount','indefinite');
+      particle.appendChild(opA);
+      svg.appendChild(pathRef);svg.appendChild(glow);svg.appendChild(line);svg.appendChild(particle);
+    }
+    const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+    defs.innerHTML=`<filter id="gf" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+    svg.appendChild(defs);
+    makeLine(ax,ay,bx,by,0);
+    makeLine(cx2,cy,dx,dy,0.6);
+  }
+}
+window.addEventListener('load',()=>setTimeout(drawAboutConnectors,500));
+
+/* ABOUT GLASS CARD + SKILL 3D TILT */
+function addTilt(el,maxDeg,liftPx,scaleFactor){
+  el.addEventListener('mousemove',(e)=>{
+    const r=el.getBoundingClientRect();
+    const x=e.clientX-r.left, y=e.clientY-r.top;
+    const nx=(x/r.width-.5)*2;
+    const ny=(y/r.height-.5)*2;
+    const rX=ny*maxDeg*-1;
+    const rY=nx*maxDeg;
+    el.style.transform=`perspective(900px) rotateX(${rX}deg) rotateY(${rY}deg) translateY(-${liftPx}px) scale(${scaleFactor})`;
+  });
+  el.addEventListener('mouseleave',()=>{
+    el.style.transform='perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+  });
+}
+document.querySelectorAll('.glass-card').forEach(card=>addTilt(card,10,12,1.01));
+document.querySelectorAll('.skill').forEach(skill=>addTilt(skill,14,7,1.07));
+
+/* PROJECT CARD 3D TILT */
+document.querySelectorAll('.project-card').forEach(card=>{
+  card.addEventListener('mousemove',(e)=>{
+    const rect=card.getBoundingClientRect();
+    const x=e.clientX-rect.left, y=e.clientY-rect.top;
+    const rY=((x/rect.width)-0.5)*20, rX=((y/rect.height)-0.5)*-20;
+    card.style.transform=`rotateY(${rY}deg) rotateX(${rX}deg) scale(1.03)`;
+    card.style.boxShadow=`${-rY*2}px ${rX*2}px 40px rgba(77,143,255,.15),0 20px 60px rgba(0,0,0,.5)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transform='';
+    card.style.boxShadow='0 20px 50px rgba(0,0,0,.5)';
+  });
+});
+
+/* GALLERY HOVER HIGHLIGHT */
+(function(){
+  const ring=document.getElementById('galleryRing');
+  const spans=[...ring.querySelectorAll('span')];
+  spans.forEach(span=>{
+    span.addEventListener('mouseenter',()=>{
+      ring.classList.add('paused','has-hover');
+      spans.forEach(s=>{
+        if(s===span){s.classList.add('gallery-highlight');s.classList.remove('gallery-dim');}
+        else{s.classList.add('gallery-dim');s.classList.remove('gallery-highlight');}
+      });
+    });
+    span.addEventListener('mouseleave',()=>{
+      ring.classList.remove('paused','has-hover');
+      spans.forEach(s=>s.classList.remove('gallery-highlight','gallery-dim'));
+    });
+  });
+})();
+
+/* COMPREHENSIVE 12-PROJECT METADATA STORAGE SYSTEM */
+const projectData=[
+  {
+    isCaseStudy: true,
+    title: "Attendify (Capstone Project)",
+    type: "UI/UX Design Case Study",
+    duration: "3 Months",
+    role: "UI/UX Designer",
+    tools: "Figma, Photoshop",
+    mainImage: "../Portfolio-2026/Project-Assets/Project-01/attendify1.jpg",
+    problemText: "San Vicente Pilot School relied on manual attendance recording and student monitoring. This process was time-consuming, prone to human error, and made it difficult for teachers and administrators to access attendance records efficiently.",
+    problemStatement: "How can we improve attendance tracking while reducing administrative workload?",
+    solutionText: "Attendify is a web-based attendance camera system designed to automate attendance monitoring through student position detection technology. The platform centralizes attendance records, enables real-time monitoring, and simplifies attendance management.",
+    features: [
+      { num: "01", title: "Automated Attendance Tracking & Real-Time Recording", desc: "Automatically logs whether a student is present, late, or absent during pre-configured class intervals matching the schedule, eliminating time-consuming manual roll calls." },
+      { num: "02", title: "Computer-Based Seating Position Verification", desc: "Uses a Smart IP camera to detect student presence based on predefined seating arrangements, ensuring students are sitting in their designated chairs to prevent attendance manipulation and proxy voting." },
+      { num: "03", title: "Automated Student Absence Notifications", desc: "Monitors student records in real time and triggers automated system warnings when a student accumulates excessive absences or consecutive lateness to encourage accountability and prevent failure." }
+    ],
+    userResearchText: "Insights revealed that manual attendance tracking required significant time and effort, often resulting in inaccurate records and delays in retrieving crucial operational information.",
+    sitemapImage: "../Portfolio-2026/Project-Assets/Project-01/sitemapA.jpg", 
+    wireframeImage: "../Portfolio-2026/Project-Assets/Project-01/wireframeA.png", 
+    featureScreens: ["Login & Auth","Administrative Dashboard","Student Module & Dashboard","Teacher Module & Dashboard" , "Student Tracking and Absence Notifications", "Automated Presence and Position Detection", "Real-Time Monitoring for Instructors", "Automated Report Generation", "Student Attendance Record Inquiries" ,"Automated Alert/Notification System"],
+    featureScreenImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop", 
+    finalOutcomeText: "The final design delivers a clean and intuitive experience that simplifies attendance management while providing quick access to essential information.",
+    finalUiImage: "../Portfolio-2026/Project-Assets/Project-01/featuresA.png",
+    feedbackText: "The feedback from our smart attendance system, Attendify, has been overwhelmingly positive, with teachers and administrators praising its ability to replace tedious manual roll calls with automated, real-time tracking that saves valuable instructional time. However, a notable challenge arose during classroom usability testing regarding seat occupancy verification under shifting environmental conditions. While the system achieves an excellent overall presence detection rate, users and testing metrics indicated that tracking individual student seating positions is less reliable when hindered by poor room lighting or peripheral camera placement. On a more positive note, everyone expressed great enthusiasm for the web-based interface, particularly the centralized administrative dashboard, automated schedule matching, and the instant warning notifications sent to students to discourage excessive absenteeism. This valuable feedback has prompted us to reevaluate our deployment strategies, shifting toward mandatory ceiling-centered camera installations and exploring multi-camera integration to maximize detection accuracy and fully streamline classroom management.",
+    conclusionText: "The study successfully focused on the development, implementation, and evaluation of Attendify, an automated attendance system designed to replace traditional, time-consuming manual roll calls with real-time tracking. By integrating core features like automated presence detection and organized data management, the prototype aims to reduce human error, minimize administrative workloads, and improve the overall speed and accuracy of record-keeping. Testing and experimental evaluations demonstrated that while the prototype achieved a very high accuracy rate of 76% when the camera was installed in the center of the classroom ceiling, performance dropped significantly from corner and side angles, highlighting that optimal camera positioning and proper lighting are critical for reliable student and seating detection."
+  },
+  {
+    isCaseStudy: false,
+    title: "Recruitment Campaigns",
+    type: "Social Media Design",
+    duration: "Approximately 5–7 hours",
+    role: "Graphic Designer",
+    tools: "Canva",
+    mainImage: "../Portfolio-2026/Project-Assets/Project-02/hiring1.jpg",
+    desc: "During my internship at Quanta Paper Corporation, I designed a series of recruitment posters to support the company's hiring campaigns across digital platforms. The project involved creating visually engaging promotional materials for various job openings while maintaining consistency with the company's branding and communication standards. Each poster was carefully structured to highlight key job information, qualifications, and application details in a clear and attractive format. Through this project, I strengthened my skills in layout design, typography, visual hierarchy, and corporate marketing while contributing to the company's recruitment and talent acquisition efforts.",
+    showcaseImages: ["../Portfolio-2026/Project-Assets/Project-02/hiring.png"]
+  },
+  {
+    isCaseStudy: false,
+    title: "Canadian Grand Prix 2026",
+    type: "Social Media Design",
+    duration: "5 Hours",
+    role: "Graphic Designer",
+    tools: "Photoshop",
+    mainImage: "../Portfolio-2026/Project-Assets/Project-03/ferrari1.jpg",
+    desc: "a motorsport-inspired promotional poster featuring two Formula 1 cars competing during the fictional Canada Grand Prix 2026. The design focuses on capturing the speed, precision, and excitement of Formula 1 racing through a dynamic aerial composition, motion elements, and seasonal visual details. The inclusion of autumn leaves and the Canadian flag helps establish the race location while adding depth and atmosphere to the scene. Through this project, I explored sports poster design, photo manipulation, visual hierarchy, and cinematic color grading to create a visually engaging piece that reflects the intensity and prestige of professional motorsport events.",
+    showcaseImages: ["../Portfolio-2026/Project-Assets/Project-03/ferrari.jpg"]
+  },
+  {
+    isCaseStudy: true,
+    title: "BulaOne (School Project)",
+    type: "UI/UX Design Case Study",
+    duration: "2 Months",
+    role: "UI/UX Designer",
+    tools: "Figma, Canva",
+    mainImage: "../Portfolio-2026/Project-Assets/Project-04/bulaone1.png",
+    problemText: "Constituents experience massive friction, manual queuing, and complex physical navigation patterns when attempting to request local certifications, file neighborhood reports, or access official executive updates. Administrative officers concurrently suffer from information fragmentation due to un-unified data systems.",
+    problemStatement: "How can we safely compress a multi-step, paper-bound local government request process into an instantaneous, transparent digital action layer for over 27,000 residents?",
+    solutionText: "Designed the Barangay Bulaon Resettlement Portal, a localized e-governance platform running unified citizen route flows. The web system consolidates public services, leadership directories, geographical mappings, and multi-channel feedback mechanisms onto an integrated, single-window application layout layer.",
+    features: [
+      { num: "01", title: "Single-Window Services Hub", desc: "A 3x2 grid layout designed for instant access to localized administrative documents. Residents can easily preview and request critical barangay paperwork—such as Barangay Clearances, Certificates of Indigency, and Business Permits—directly from the interface, completely removing the need for long, physical queues." },
+      { num: "02", title: "Interactive Geospatial Mapping Node", desc: "An embedded, interactive map module centered directly on the page layout. This feature provides constituents with immediate visual context regarding the territorial boundaries, public zoning, safety perimeters, and key institutional hubs unique to Barangay Bulaon." },
+      { num: "03", title: "Citizen Feedback & Digital Reporting Portal", desc: "A dedicated, dual-input transactional section located at the bottom of the page. It empowers community residents to directly file official feedback, submit neighborhood reports, or safely flag civic issues to active desk administrators, bridging the gap between local officials and the community." }
+    ],
+    userResearchText: "Quantitative user discovery maps confirmed that a lack of centralized information transparency and location-bound tracking accounted for over 58% of delayed municipal tasks. By structuring clear, readable navigation patterns, the user experience framework directly tackles the main points of friction reported across various age segments of the resettlement community.",
+    sitemapImage: "../Portfolio-2026/Project-Assets/Project-04/sitemapB.jpg",
+    wireframeImage: "../Portfolio-2026/Project-Assets/Project-04/wireframeB.png",
+    featureScreens: ["Services Hub", "Embedded Geospatial Map Node", "Dual-Action Feedback & Reports Portal", "Hierarchical Council Directory"],
+    featureScreenImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    finalOutcomeText: "The final outcome of this project is a responsive, public-facing web portal for Barangay Bulaon that transitions traditional community management into an accessible digital ecosystem. As shown, the design uses a clean, institutional blue color palette to deliver an intuitive user experience featuring an official council hub, digitized document requesting (such as Barangay Indigency forms), and a direct feedback/reporting system to streamline civic engagement.",
+    finalUiImage: "../Portfolio-2026/Project-Assets/Project-04/bulaonefinal.png",
+    feedbackText: "Feedback gathered during the evaluation of the Barangay Bulaon Management System was generally positive, with users appreciating the clean layout, organized information structure, and ease of accessing barangay services and documents through the website. The online forms and service pages were considered helpful in simplifying common requests and reducing the effort required to obtain information. However, some users noted that certain sections contained a large amount of content that could be presented more clearly, while others suggested improving button visibility and mobile responsiveness to make navigation more intuitive. Despite these observations, the overall experience was viewed favorably, with users recognizing the system’s potential to enhance communication, accessibility, and service delivery within the community.",
+    conclusionText: "The Barangay Bulaon Management System demonstrates how digital solutions can improve the accessibility and efficiency of community services through a user-friendly and organized web platform. By providing residents with convenient access to information, online document requests, and communication channels, the system helps streamline common barangay processes while promoting greater community engagement. Although there are opportunities for further refinement in areas such as navigation clarity and mobile usability, the project successfully meets its objective of creating a modern, accessible, and service-oriented digital experience for both residents and barangay officials."
+  },
+  {
+    isCaseStudy: false,
+    title: "Earth Buddy",
+    type: "Sales Promotion Banner",
+    duration: "3 Hour ",
+    role: "Graphic Designer",
+    tools: "Photoshop",
+    mainImage: "../Portfolio-2026/Project-Assets/Project-05/bodega1.jpg",
+    desc: "Designed a promotional social media advertisement for a retail campaign featuring household and baby care products. The design focuses on attracting customer attention through bold typography, vibrant visuals, and strategic product placement while highlighting special offers and featured items. The project aimed to enhance brand visibility and support marketing efforts across digital platforms.",
+    showcaseImages: ["../Portfolio-2026/Project-Assets/Project-05/bodegaA.png"]
+  },
+  {
+    isCaseStudy: false,
+    title: "Squid Game",
+    type: "Entertainment Poster Design",
+    duration: "4 Hours",
+    role: "Graphic Artist",
+    tools: "Photoshop",
+    mainImage: "../Portfolio-2026/Project-Assets/Project-06/SquidGame1.jpg",
+    desc: "This personal project was created as a fan-made promotional poster inspired by Squid Game 3. The goal was to explore cinematic poster design techniques by combining photo manipulation, typography, lighting effects, and visual storytelling into a single composition. The design emphasizes the tension and mystery of the series through a dramatic focal character, layered imagery, and a dark, atmospheric color palette. This project allowed me to practice creating professional entertainment-style marketing materials while enhancing my skills in composition, branding, and digital design.",
+    showcaseImages: ["../Portfolio-2026/Project-Assets/Project-06/SquidGame.jpg"]
+  },
+  {
+    isCaseStudy: true,
+    title: "The Pavillion",
+    type: "UI/UX DESIGN CASE STUDY (PERSONAL PROJECT)",
+    duration: "1 Week",
+    role: "UI/UX Designer",
+    tools: "Figma",
+    mainImage: "../Portfolio-2026/Project-Assets/Project-07/THP1.jpg",
+    problemText: "Traditional real estate and property booking mobile layouts are often data-heavy, cluttered, and confusing for users trying to quickly check property availability or track an active reservation status. When dashboards try to show too much information at once, users experience cognitive overload and drop off before completing their booking.",
+    problemStatement: "How can I design a clean, highly visual mobile dashboard interface that organizes property browsing, booking tracking, and status updates into a frictionless, single-screen experience?",
+    solutionText: "I designed a mobile-first UI for the Hausland Reservation System, focusing entirely on the post-login dashboard ecosystem. By leveraging a structured tabbed container, the interface isolates distinct user intents—browsing venues, tracking reservation details, and monitoring administrative approval status—into a cohesive, modern visual system.",
+    features: [
+      { num: "01", title: "Gateway & Brand Alignment", desc: "A streamlined entry experience featuring integrated local property imagery framed within smooth architectural arches. It establishes a strong sense of place and trust during the login and registration flows." },
+      { num: "02", title: "Unified Available Venue Catalog Feed", desc: "The primary dashboard view utilizes a high-visibility card component layout. Properties (such as The Pavilion at Hausland Pampanga) are paired with explicit localized pricing tags (₱10,000) and sharp imagery to make browsing effortless." },
+      { num: "03", title: "State-Driven Sub-Navigation Matrix", desc: "To avoid messy navigation menus, the dashboard layout changes dynamically based on three core sub-tabs: <br><br> Dashboard: For exploring and scrolling available properties. <br><br> Bookings: For visualizing current project developments and reservation details. <br><br> Notifications: A clean administrative feedback feed to monitor document and reservation approvals." }
+    ],
+    userResearchText: "This personal project optimizes the Hausland Reservation System by consolidating property browsing, booking tracking, and admin updates into a single-screen mobile dashboard. Built to address user drop-offs caused by interface clutter, the clean three-tab layout eliminates confusing menus to deliver a fast, frictionless booking experience.",
+    sitemapImage: "../Portfolio-2026/Project-Assets/Project-07/THPsite.png",
+    wireframeImage: "../Portfolio-2026/Project-Assets/Project-07/THPwire.png",
+    featureScreens: ["Gateway & Brand Alignment", "Unified Available Venue Catalog Feed", "State-Driven Sub-Navigation Matrix"],
+    featureScreenImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    finalOutcomeText: "(CONCEPTUAL) The final deliverable is a high-fidelity mobile dashboard UI concept for the Hausland Reservation System. Because this is an unfinished personal project, the scope focuses entirely on a static exploration of visual hierarchy, showcasing how a three-tab navigation matrix can streamline property browsing and booking tracking.",
+    finalUiImage: "../Portfolio-2026/Project-Assets/Project-07/THPfinal.png",
+    feedbackText: "As an early-stage personal concept, preliminary feedback was gathered through a peer design walkthrough of the static screens. My peers highly praised the layout's clean visual structure and the intuitive three-tab navigation matrix, noting that separating browsing, tracking, and approval logs made the interface highly scannable. However, they suggested adding clearer visual indicators for horizontal swiping on the venue cards and noted that building out prototype micro-interactions between the tab states would be a necessary next step to fully evaluate the user flow once development resumes.",
+    conclusionText: "The Hausland Reservation System project highlights the value of prioritizing interface clarity and shallow informational layouts in mobile design. By transforming a multi-step property process into a visual, container-driven dashboard concept, the project establishes a strong foundation for reducing user drop-offs. While it remains an unfinished personal layout exploration, it serves as a robust proof-of-concept for how modern UI frameworks can bridge the gap between prospective buyers and transparent real estate tracking."
+  },
+  {
+    isCaseStudy: false,
+    title: "GILLE Helmet",
+    type: "Social Media Advertising",
+    duration: "5 Hours",
+    role: "Graphic Design",
+    tools: "Photoshop",
+    mainImage: "../Portfolio-2026/Project-Assets/Project-08/helmet1.jpg",
+    desc: "This personal project was created as a premium commercial key visual for GILLE Helmets, highlighting the Squadron Hanya model. The goal was to explore automotive and action-sports advertising techniques by combining advanced photo manipulation, dramatic terrain lighting effects, and precise typographic hierarchy to deliver a high-impact, market-ready digital marketing asset.",
+    showcaseImages: ["../Portfolio-2026/Project-Assets/Project-08/helmet.jpg"]
+  },
+  {
+    isCaseStudy: false,
+    title: "Bear Brand",
+    type: "Social Media Advertising",
+    duration: "4 Hours",
+    role: "Graphic Designer",
+    tools: "Photoshop",
+    mainImage: "../Portfolio-2026/Project-Assets/Project-09/Milk1.jpg",
+    desc: "This personal project was designed as a vibrant, concept-driven print and digital advertisement for Nestlé Bear Brand Sterilized Milk. The creative goal was to interpret the product's core brand promise—strength and resilience (Tibay) through a surreal visual metaphor of a businessman executing a playful pull-up on a giant straw. The workflow involved advanced photo compositing, creating realistic shadows to anchor the floating subject, and balancing heavy multi-brand typography (Nestlé, Bear Brand, and promotional callouts) within a clean, high-contrast studio blue layout.",
+    showcaseImages: ["../Portfolio-2026/Project-Assets/Project-09/Milk.jpg"]
+  },
+  {
+    isCaseStudy: true,
+    title: "Pulse Health App",
+    type: "UI/UX Design Case Study",
+    duration: "3 Months",
+    role: "Mobile Product Architect",
+    tools: "Figma, ProtoPie",
+    mainImage: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1200&auto=format&fit=crop",
+    problemText: "Outpatients encounter significant communication disconnects, disjointed symptom logging procedures, and confusing telemetry metrics inside traditional clinic applications.",
+    problemStatement: "How can we make remote clinical symptom logging read effortlessly for senior outpatients?",
+    solutionText: "Pulse simplifies patient check-ins by presenting high-contrast card arrays, localized conversational dialog boxes, and direct diagnostic streaming portals.",
+    features: [
+      { num: "01", title: "Intuitive Vitals Log", desc: "Input physical body metrics seamlessly using simplified interactive hardware sliders." },
+      { num: "02", title: "Direct Video Hub", desc: "Secure encrypted visual streaming pipelines linking patients directly to consulting staff nodes." },
+      { num: "03", title: "Smart Prescription Feed", desc: "Automated, chronological daily charts tracking medical intake times alongside alert notes." }
+    ],
+    userResearchText: "Symptom monitoring studies proved that using conversational language formats rather than complex scientific forms boosted daily logging accuracy by 64%.",
+    sitemapImage: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1200&auto=format&fit=crop",
+    wireframeImage: "https://images.unsplash.com/photo-1581291518655-9523c932dedf?q=80&w=1200&auto=format&fit=crop",
+    featureScreens: ["Patient Onboarding", "Vitals Dashboard", "Live Tele-Clinic", "Prescription Feed", "Symptom History", "Clinic Locator"],
+    featureScreenImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    finalOutcomeText: "The completed asset provides a deeply reassuring product space that makes remote clinic check-ins feel effortless.",
+    finalUiImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop",
+    feedbackText: "User feedback highlighted the app's calming color balancing layouts and accessible typography structures.",
+    conclusionText: "Pulse bridges clinical performance with accessible design frameworks, proving that health tracking apps thrive on empathy and clarity."
+  },
+  {
+    isCaseStudy: false,
+    title: "Biryani Poster",
+    type: "FOOD ADVERTISING DESIGN",
+    duration: "4 Hours",
+    role: "Graphic Designer",
+    tools: "Canva",
+    mainImage: "../Portfolio-2026/Project-Assets/Project-10/biryani1.jpg",
+    desc: "This project features a dual-poster marketing campaign commissioned for the live launch of the Boy B's Biryani food stand, specifically showcasing the Beef Biryani and Chicken Biryani offerings. The creative execution applies high-impact restaurant marketing tactics by utilizing a clean, split-background layout—contrasting a crisp, textured light background against a deep, rich culinary red to stimulate appetite.",
+    showcaseImages: ["../Portfolio-2026/Project-Assets/Project-10/biryaniB.png"]
+  },
+  {
+    isCaseStudy: false,
+    title: "Poster Design",
+    type: "National Heroes Day",
+    duration: "3 Hours",
+    role: "Graphic Designer",
+    tools: "Photoshop",
+    mainImage: "../Portfolio-2026/Project-Assets/Project-11/NHD1.jpg",
+    desc: "This personal project is a commemorative poster created for National Heroes Day. The artwork utilizes a creative scrapbook visual concept, placing historical imagery, tape textures, a pocket watch, and a quill over a vintage open book template. The design process focused on intricate digital compositing, blending golden vector portraits of Philippine heroes into the parchment, and applying elegant script typography to establish a respectful, historical theme.",
+    showcaseImages: ["../Portfolio-2026/Project-Assets/Project-11/NHD.jpg"]
+  }
+];
+
+/* MODAL INTERACTION CONTROLLER */
+const modal=document.getElementById('projectModal');
+const closeProjectModal=document.getElementById('closeProjectModal');
+const dynamicTarget=document.getElementById('modalDynamicTarget');
+
+document.querySelectorAll('.project-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    const id=parseInt(card.getAttribute('data-id'));
+    const d=projectData[id];
+    if(!d) return;
+    
+    let htmlContent = '';
+    
+    if(d.isCaseStudy) {
+      // UI/UX Full Case Study Render Blueprint (Same Structure as Attendify)
+      htmlContent = `
+        <div class="modal-hero-banner">
+          <img src="${d.mainImage}" alt="${d.title}">
+          <div class="modal-hero-overlay"></div>
+        </div>
+        
+        <div class="modal-body">
+          <div class="modal-meta-row">
+            <div class="modal-title-area">
+              <h2>${d.title}</h2>
+              <div class="modal-tagline-sub">${d.type}</div>
+            </div>
+          </div>
+          
+          <div class="modal-quick-info">
+            <div class="info-pill-item">
+              <h5>Duration</h5>
+              <p>${d.duration}</p>
+            </div>
+            <div class="info-pill-item">
+              <h5>Role</h5>
+              <p>${d.role}</p>
+            </div>
+            <div class="info-pill-item">
+              <h5>Tools</h5>
+              <p>${d.tools}</p>
+            </div>
+            <div class="info-pill-item">
+              <h5>Status</h5>
+              <p style="color:var(--accent);">✦ Case Study</p>
+            </div>
+          </div>
+          
+          <div class="modal-section-block">
+            <h3>Overview</h3>
+            <div class="problem-solution-box">
+              <div class="ps-card">
+                <h4>The Problem</h4>
+                <p>${d.problemText}</p>
+                <div style="margin-top:15px; font-weight:600; font-style:italic; color:var(--silver-bright); font-size:0.9rem;">
+                  "${d.problemStatement}"
+                </div>
+              </div>
+              <div class="ps-card">
+                <h4>The Solution</h4>
+                <p>${d.solutionText}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="modal-section-block">
+            <h3>Key Features</h3>
+            <div class="features-container-grid">
+              ${d.features.map(f => `
+                <div class="feature-item-card">
+                  <div class="f-num">${f.num}</div>
+                  <h4>${f.title}</h4>
+                  <p>${f.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          
+          <div class="modal-section-block">
+            <h3>User Research</h3>
+            <p>${d.userResearchText.replace(/\n/g, '<br>')}</p>
+          </div>
+          
+          <div class="modal-section-block">
+            <h3>Site Map</h3>
+            <div class="modal-showcase-view">
+              <img src="${d.sitemapImage}" alt="Site Map Architecture">
+              <div class="image-caption-tag">Information Architecture & User Flow</div>
+            </div>
+          </div>
+          
+          <div class="modal-section-block">
+            <h3>Wireframes</h3>
+            <div class="modal-showcase-view">
+              <img src="${d.wireframeImage}" alt="Wireframe Screen Layouts">
+              <div class="image-caption-tag">Mid-Fidelity Blueprints &amp; Structural Flow</div>
+            </div>
+          </div>
+          
+          <div class="modal-section-block">
+            <h3>Features &amp; Functional Scopes</h3>
+            <div class="modal-split-matrix" style="margin-bottom:25px;">
+              <div class="matrix-block-pane" style="grid-column: 1 / -1;">
+         
+                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-top:10px;">
+                  ${d.featureScreens.map(scr => `<li>${scr}</li>`).join('')}
+                </div>
+              </div>
+            </div>
+            <div class="modal-showcase-view">
+             
+            </div>
+          </div>
+          
+          <div class="modal-section-block">
+            <h3>Final Outcome</h3>
+            <p style="margin-bottom:20px;">${d.finalOutcomeText}</p>
+            <div class="modal-showcase-view">
+              <img src="${d.finalUiImage}" alt="Final Application Design">
+              <div class="image-caption-tag">Polished Deliverable Mockup Showcase UI Interface System</div>
+            </div>
+          </div>
+          
+          <div class="modal-section-block">
+            <h3>User Evaluation &amp; Feedback</h3>
+            <p>${d.feedbackText.replace(/\n/g, '<br>')}</p>
+          </div>
+          
+          <div class="modal-section-block" style="margin-bottom: 0;">
+            <h3>Conclusion</h3>
+            <p>${d.conclusionText}</p>
+          </div>
+        </div>
+      `;
+    } else {
+      // Tailored Graphic Design Layout Framework (Exhibits high fidelity renders perfectly)
+      htmlContent = `
+        <div class="modal-hero-banner">
+          <img src="${d.mainImage}" alt="${d.title}">
+          <div class="modal-hero-overlay"></div>
+        </div>
+        <div class="modal-body">
+          <div class="modal-meta-row">
+            <div class="modal-title-area">
+              <h2>${d.title}</h2>
+              <div class="modal-tagline-sub">${d.type}</div>
+            </div>
+          </div>
+          
+          <div class="modal-quick-info">
+            <div class="info-pill-item">
+              <h5>Project Timeline</h5>
+              <p>${d.duration}</p>
+            </div>
+            <div class="info-pill-item">
+              <h5>Design Assignment</h5>
+              <p>${d.role}</p>
+            </div>
+            <div class="info-pill-item">
+              <h5>Production Stack</h5>
+              <p>${d.tools}</p>
+            </div>
+            <div class="info-pill-item">
+              <h5>Status</h5>
+              <p style="color:var(--accent);">✦ Portfolio Asset</p>
+            </div>
+          </div>
+          
+          <div class="modal-section-block">
+            <h3>Project Summary Description</h3>
+            <p style="margin-bottom:20px; color:var(--silver-dim); font-size:1.05rem; line-height:1.8;">${d.desc}</p>
+          </div>
+
+          <div class="modal-section-block" style="margin-bottom:0;">
+            <h3>High-Fidelity Design Exhibition</h3>
+            ${d.showcaseImages.map(imgUrl => `
+              <div class="modal-showcase-view" style="margin-top:20px; border-color: rgba(77,143,255,0.25);">
+                <img src="${imgUrl}" alt="High Res Showcase Graphic Asset">
+                <div class="image-caption-tag">Production Render Deliverable — 100% Scale View</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+    
+    dynamicTarget.innerHTML = htmlContent;
+    
+    // Inject Dynamic Interaction Hover Physics
+    setTimeout(() => {
+      document.querySelectorAll('.modal-showcase-view, .ps-card, .feature-item-card').forEach(item => {
+        item.style.transformStyle = 'preserve-3d';
+        item.addEventListener('mousemove', (e) => {
+          const bounding = item.getBoundingClientRect();
+          const localX = e.clientX - bounding.left;
+          const localY = e.clientY - bounding.top;
+          const computedY = ((localX / bounding.width) - 0.5) * 6;
+          const computedX = ((localY / bounding.height) - 0.5) * -6;
+          item.style.transform = `perspective(1000px) rotateY(${computedY}deg) rotateX(${computedX}deg) scale(1.015)`;
+        });
+        item.addEventListener('mouseleave', () => {
+          item.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1)';
+        });
+      });
+    }, 50);
+
+    modal.classList.add('active');
+    document.body.style.overflow='hidden';
+  });
+});
+
+closeProjectModal.addEventListener('click',()=>{modal.classList.remove('active');document.body.style.overflow='';});
+modal.addEventListener('click',(e)=>{if(e.target===modal){modal.classList.remove('active');document.body.style.overflow='';}});
+
+/* CONTACT MODAL */
+const contactModal=document.getElementById('contactModal');
+const closeContactModal=document.getElementById('closeContactModal');
+function openContactModal(){contactModal.classList.add('active');document.body.style.overflow='hidden';}
+function closeContact(){contactModal.classList.remove('active');document.body.style.overflow='';}
+document.getElementById('heroHireBtn').addEventListener('click',openContactModal);
+document.getElementById('contactGetBtn').addEventListener('click',openContactModal);
+closeContactModal.addEventListener('click',closeContact);
+contactModal.addEventListener('click',(e)=>{if(e.target===contactModal)closeContact();});
+document.getElementById('cSendBtn').addEventListener('click', () => {
+  const name    = document.getElementById('cName').value.trim();
+  const email   = document.getElementById('cEmail').value.trim();
+  const subject = document.getElementById('cSubject').value.trim();
+  const msg     = document.getElementById('cMessage').value.trim();
+  const sendBtn = document.getElementById('cSendBtn');
+
+  /* — Basic validation — */
+  let invalid = false;
+  ['cName','cEmail','cMessage'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.style.borderColor = 'rgba(255,80,80,.6)';
+      el.style.boxShadow   = '0 0 0 2px rgba(255,80,80,.15)';
+      invalid = true;
+      setTimeout(() => { el.style.borderColor=''; el.style.boxShadow=''; }, 2000);
+    }
+  });
+  if (invalid) return;
+
+  /* — Email format check — */
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    const el = document.getElementById('cEmail');
+    el.style.borderColor = 'rgba(255,80,80,.6)';
+    el.style.boxShadow   = '0 0 0 2px rgba(255,80,80,.15)';
+    setTimeout(() => { el.style.borderColor=''; el.style.boxShadow=''; }, 2000);
+    return;
+  }
+
+  /* — Loading state — */
+  sendBtn.disabled = true;
+  sendBtn.innerHTML = '<span>Sending… &nbsp;<i class="fa-solid fa-spinner fa-spin"></i></span>';
+
+  const templateParams = {
+    name    : name,
+    email   : email,
+    title   : subject || 'Portfolio Inquiry',
+    message : msg
+  };
+
+  /* — Send auto-reply to the visitor + notification to you — */
+  emailjs.send('service_3g6nh7m', 'template_w09wueo', templateParams)
+    .then(() => {
+      /* success */
+      document.getElementById('cmodalForm').style.display = 'none';
+      document.getElementById('cSuccess').style.display   = 'block';
+      /* reset form */
+      ['cName','cEmail','cSubject','cMessage'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      setTimeout(closeContact, 3800);
+    })
+    .catch((err) => {
+      /* error — restore button and show feedback */
+      sendBtn.disabled = false;
+      sendBtn.innerHTML = '<span>Send Message &nbsp;✦</span>';
+      sendBtn.style.borderColor = 'rgba(255,80,80,.5)';
+      sendBtn.style.boxShadow   = '0 0 0 2px rgba(255,80,80,.15)';
+      setTimeout(() => {
+        sendBtn.style.borderColor = '';
+        sendBtn.style.boxShadow   = '';
+      }, 2500);
+      console.error('EmailJS error:', err);
+    });
+});
+
+/* TOUCH DEVICE — restore cursor & make cards always-visible */
+if('ontouchstart' in window || navigator.maxTouchPoints > 0){
+  document.body.style.cursor='auto';
+  const pen=document.querySelector('.pen-cursor');
+  const glow=document.getElementById('cursorGlow');
+  const trail=document.getElementById('trailCanvas');
+  if(pen) pen.style.display='none';
+  if(glow) glow.style.display='none';
+  if(trail) trail.style.display='none';
+}
+
+/* ABOUT SVG — trigger on scroll */
+const aboutSection=document.getElementById('about');
+const aboutObs=new IntersectionObserver((entries)=>{
+  if(entries[0].isIntersecting)setTimeout(drawAboutConnectors,300);
+},{threshold:.2});
+aboutObs.observe(aboutSection);
+</script>
+</body>
+</html>
